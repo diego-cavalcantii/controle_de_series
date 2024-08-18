@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Serie;
+
 
 # Controller - classe com ações e metodos que são executados quando uma rota é acessada
 # Model - classe que representa uma tabela do banco de dados
@@ -18,12 +21,8 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     {
         //return $request -> url(); # Pegando o valor do parametro id da requisição / na url se acessa com ?id=1
         //return redirect('https://google.com'); # Redirecionando para a rota google.com
-        $series = [
-            'Punisher',
-            'Lost',
-            'Breaking Bad',
-            'This is Us'
-          ];
+        $series = Serie::query() -> orderBy('nome','asc')->get();# Pegando todos os valores da tabela series
+        //dd($series); # Função que exibe o valor da variavel e para a execução do código
       
         // return view('listar-series',[
         //     'series' => $series // variavel que vai ser passada para a view e valor que ela vai receber
@@ -46,7 +45,17 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
      */
     public function store(Request $request)
     {
-        //
+        $serie = new Serie();
+        $nomeSerie = $request -> input('nome'); # Pegando o valor do parametro nome da requisição
+        $serie -> nome = $nomeSerie;
+
+        $generoSerie = $request -> input('genero'); # Pegando o valor do parametro nome da requisição
+        $serie -> genero = $generoSerie;
+        $serie -> save(); # Salvando os valores na tabela series
+
+        //(DB::insert('INSERT INTO series (nome,genero)  VALUES (?,?)',[$nomeSerie,$generoSerie])){ # Inserindo na tabela series os valores de nome e genero
+        return redirect('/series'); # Redirecionando para a rota /series 
+
     }
 
     /**
@@ -62,22 +71,41 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
      */
     public function edit(string $id)
     {
-        //
+        $serie = Serie::findOrFail($id); // Encontre a série pelo ID
+        return view('series.edit', compact('serie')); // Retorne a view de edição com os dados da série
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
+{
+    // Validação dos dados recebidos (ajuste conforme necessário)
+    $request->validate([
+        'nome' => 'required|string|max:255',
+        'genero' => 'required|string|max:255',
+    ]);
+
+    $serie = Serie::findOrFail($id); // Encontre a série pelo ID
+    $serie->nome = $request->input('nome'); // Atualize o nome
+    $serie->genero = $request->input('genero'); // Atualize o gênero
+    $serie->save(); // Salve as mudanças
+
+    return redirect('/series'); // Redirecione para a lista de séries
+}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        // Encontre a série pelo ID
+        $serie = Serie::findOrFail($id);
+    
+        // Exclua a série
+        $serie->delete();
+    
+        // Redirecione para a lista de séries
+        return redirect('/series');
     }
 }

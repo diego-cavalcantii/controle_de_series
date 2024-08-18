@@ -3,6 +3,7 @@
 use App\Http\Controllers\SeriesController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,4 +17,11 @@ Route::get('/series',[SeriesController::class,'index']); #Definindo uma rota par
 # criei uma rota para o endereço /series que vai chamar o método index do controller SeriesController
 
 Route::get('/series/criar',[SeriesController::class,'create']); 
+
+Route::post('/series/salvar',[SeriesController::class,'store']); 
+Route::get('/series/{id}/editar', [SeriesController::class, 'edit']); // Mostrar formulário de edição
+Route::put('/series/{id}', [SeriesController::class, 'update']); // Atualizar série
+Route::delete('/series/{id}', [SeriesController::class, 'destroy']); // Excluir uma série
+
+
 
