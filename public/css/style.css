@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.movie-list {
+  display: flex;
+  flex-direction: column;
+
+  div:first-child {
+    border-radius: 10px 10px 0 0;
+  }
+
+  div:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+.movie-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  li {
+    display: block;
+    text-transform: capitalize;
+  }
+
+}

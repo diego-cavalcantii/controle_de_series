@@ -11,6 +11,6 @@
       <label for="genero">Gênero</label>
       <input type="text" class="form-control" id="genero" name="genero" value="{{ $serie->genero }}" required>
     </div>
-    <button type="submit" class="btn btn-primary">Atualizar</button>
+    <button type="submit" class="btn btn-primary mt-3">Atualizar</button>
   </form>
 </x-layout>
