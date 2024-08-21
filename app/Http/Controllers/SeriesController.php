@@ -54,7 +54,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         $serie -> save(); # Salvando os valores na tabela series
 
         //(DB::insert('INSERT INTO series (nome,genero)  VALUES (?,?)',[$nomeSerie,$generoSerie])){ # Inserindo na tabela series os valores de nome e genero
-        return redirect('/series'); # Redirecionando para a rota /series 
+        return redirect('/'); # Redirecionando para a rota /series 
 
     }
 
@@ -91,7 +91,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     $serie->genero = $request->input('genero'); // Atualize o gênero
     $serie->save(); // Salve as mudanças
 
-    return redirect('/series'); // Redirecione para a lista de séries
+    return redirect('/'); // Redirecione para a lista de séries
 }
 
 
@@ -106,7 +106,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
 
         $serie->delete();
 
-        return redirect('/series');
+        return redirect('/');
 
     }
 }
