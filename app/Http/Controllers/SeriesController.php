@@ -17,7 +17,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)  # Método index que recebe uma requisição e retorna uma resposta
+    public function index()  # Método index que recebe uma requisição e retorna uma resposta
     {
         //return $request -> url(); # Pegando o valor do parametro id da requisição / na url se acessa com ?id=1
         //return redirect('https://google.com'); # Redirecionando para a rota google.com
@@ -29,6 +29,30 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         // ]); # Retornando a view listar-series
 
         return view('series.index') -> with('series',$series); # Retornando a view listar-series
+    }
+
+    public function acao()
+    {
+        $series = Serie::where('genero','Ação')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexAcao') -> with('series',$series); # Retornando a view listar-series
+    }
+
+    public function comedia()
+    {
+        $series = Serie::where('genero','Comedia')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexComedia') -> with('series',$series); # Retornando a view listar-series
+    }
+
+    public function drama()
+    {
+        $series = Serie::where('genero','Drama')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexDrama') -> with('series',$series); # Retornando a view listar-series
+    }
+
+    public function terror()
+    {
+        $series = Serie::where('genero','Terror')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexTerror') -> with('series',$series); # Retornando a view listar-series
     }
         //
 
@@ -56,7 +80,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         $serie -> nome = $nomeSerie;
 
         $generoSerie = $request -> input('genero'); # Pegando o valor do parametro nome da requisição
-        $serie -> genero = $generoSerie;
+        $serie -> genero = ucwords($generoSerie);
 
         $posterSerie = $request -> input('poster');
         $serie -> poster = $posterSerie;

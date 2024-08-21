@@ -1,6 +1,5 @@
-<x-layout title="Séries">
-  <a class="btn btn-dark mb-3" href="{{ url('/series/criar') }}" style="box-shadow:2px 2px 1px rgb(0,0,0.9);">Adicionar nova Série</a>
-    <ul class="movie-list">
+<x-layout title="Séries de Terror">
+<ul class="movie-list">
     @foreach($series as $serie)
     <div class="movie-box">
       <div class="box-img">
@@ -71,4 +70,5 @@
     </div>
         @endforeach
       </ul>
+
 </x-layout>
