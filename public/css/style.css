@@ -13,9 +13,6 @@ body {
 header {
   background-color: #333;
   padding: 20px 0;
-  margin-bottom: 50px;
-
-
 
   h1 {
     color: #fafafa;
@@ -24,6 +21,9 @@ header {
 }
 main {
   flex-grow: 1;
+  width: 85%;
+  margin: 50px auto;
+
 }
 
 img {
@@ -79,11 +79,6 @@ nav {
       padding: 5px 20px;
     }
   }
-}
-
-.container-series {
-  width: 80%;
-  margin: 0 auto;
 }
 
 .movie-list {

@@ -48,7 +48,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         $generoNome = $generoMap[$genero];
 
         // Pegue as séries do banco de dados com o gênero especificado
-        $series = Serie::where('genero', $generoNome)->get();
+        $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
 
         return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
     }
