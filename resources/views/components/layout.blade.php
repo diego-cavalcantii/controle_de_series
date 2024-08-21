@@ -6,10 +6,13 @@
   <title>{{$title}} - Controle de Séries</title>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 </head>
 <body>
-  <main class="container">
+  <header>
     <h1>{{$title}}</h1>
+  </header>
+  <main class="container-series">
     {{$slot}}
   </main>
 </body>

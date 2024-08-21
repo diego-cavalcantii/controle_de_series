@@ -45,12 +45,21 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'genero' => 'required|string|max:255',
+            'poster' => 'required|string|max:255',
+        ]);
+
         $serie = new Serie();
         $nomeSerie = $request -> input('nome'); # Pegando o valor do parametro nome da requisição
         $serie -> nome = $nomeSerie;
 
         $generoSerie = $request -> input('genero'); # Pegando o valor do parametro nome da requisição
         $serie -> genero = $generoSerie;
+
+        $posterSerie = $request -> input('poster');
+        $serie -> poster = $posterSerie;
         $serie -> save(); # Salvando os valores na tabela series
 
         //(DB::insert('INSERT INTO series (nome,genero)  VALUES (?,?)',[$nomeSerie,$generoSerie])){ # Inserindo na tabela series os valores de nome e genero
@@ -84,11 +93,13 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     $request->validate([
         'nome' => 'required|string|max:255',
         'genero' => 'required|string|max:255',
+        'poster' => 'required|string|max:255',
     ]);
 
     $serie = Serie::findOrFail($id); // Encontre a série pelo ID
     $serie->nome = $request->input('nome'); // Atualize o nome
     $serie->genero = $request->input('genero'); // Atualize o gênero
+    $serie -> poster = $request -> input('poster');
     $serie->save(); // Salve as mudanças
 
     return redirect('/'); // Redirecione para a lista de séries
