@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[SeriesController::class,'index']); #Definindo uma rota para  - usando o controller SeriesController e o método index
 # criei uma rota para o endereço /series que vai chamar o método index do controller SeriesController
 
-Route::get('/series/acao',[SeriesController::class,'acao']); 
-Route::get('/series/comedia',[SeriesController::class,'comedia']); 
-Route::get('/series/drama',[SeriesController::class,'drama']); 
-Route::get('/series/terror',[SeriesController::class,'terror']); 
+Route::get('/series/{genero}',[SeriesController::class,'moviesGenero']); 
 
 Route::get('/series/criar',[SeriesController::class,'create']); 
 

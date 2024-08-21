@@ -21,40 +21,56 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     {
         //return $request -> url(); # Pegando o valor do parametro id da requisição / na url se acessa com ?id=1
         //return redirect('https://google.com'); # Redirecionando para a rota google.com
-        $series = Serie::query() -> orderBy('nome','asc')->get();# Pegando todos os valores da tabela series
+        $series = Serie::query()->orderBy('nome', 'asc')->get(); # Pegando todos os valores da tabela series
         //dd($series); # Função que exibe o valor da variavel e para a execução do código
-      
+
         // return view('listar-series',[
         //     'series' => $series // variavel que vai ser passada para a view e valor que ela vai receber
         // ]); # Retornando a view listar-series
 
-        return view('series.index') -> with('series',$series); # Retornando a view listar-series
+        return view('series.index')->with('series', $series); # Retornando a view listar-series
     }
 
-    public function acao()
+    public function moviesGenero(Request $request)
     {
-        $series = Serie::where('genero','Ação')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexAcao') -> with('series',$series); # Retornando a view listar-series
+
+        $genero = $request->route('genero');
+
+        $generoMap = [
+            'acao' => 'Ação',
+            'comedia' => 'Comédia',
+            'drama' => 'Drama',
+            'suspense' => 'Suspense',
+            'terror' => 'Terror'
+        ];
+
+        // Se o gênero não estiver no mapeamento, use 'Ação' como padrão
+        $generoNome = $generoMap[$genero] ?? 'Ação';
+
+        // Pegue as séries do banco de dados com o gênero especificado
+        $series = Serie::where('genero', $generoNome)->get();
+
+        return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
     }
 
     public function comedia()
     {
-        $series = Serie::where('genero','Comedia')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexComedia') -> with('series',$series); # Retornando a view listar-series
+        $series = Serie::where('genero', 'Comedia')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexComedia')->with('series', $series); # Retornando a view listar-series
     }
 
     public function drama()
     {
-        $series = Serie::where('genero','Drama')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexDrama') -> with('series',$series); # Retornando a view listar-series
+        $series = Serie::where('genero', 'Drama')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexDrama')->with('series', $series); # Retornando a view listar-series
     }
 
     public function terror()
     {
-        $series = Serie::where('genero','Terror')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexTerror') -> with('series',$series); # Retornando a view listar-series
+        $series = Serie::where('genero', 'Terror')->get(); # Pegando todos os valores da tabela series
+        return view('series.indexTerror')->with('series', $series); # Retornando a view listar-series
     }
-        //
+    //
 
     /**
      * Show the form for creating a new resource.
@@ -76,15 +92,15 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         ]);
 
         $serie = new Serie();
-        $nomeSerie = $request -> input('nome'); # Pegando o valor do parametro nome da requisição
-        $serie -> nome = $nomeSerie;
+        $nomeSerie = $request->input('nome'); # Pegando o valor do parametro nome da requisição
+        $serie->nome = $nomeSerie;
 
-        $generoSerie = $request -> input('genero'); # Pegando o valor do parametro nome da requisição
-        $serie -> genero = ucwords($generoSerie);
+        $generoSerie = $request->input('genero'); # Pegando o valor do parametro nome da requisição
+        $serie->genero = ucwords($generoSerie);
 
-        $posterSerie = $request -> input('poster');
-        $serie -> poster = $posterSerie;
-        $serie -> save(); # Salvando os valores na tabela series
+        $posterSerie = $request->input('poster');
+        $serie->poster = $posterSerie;
+        $serie->save(); # Salvando os valores na tabela series
 
         //(DB::insert('INSERT INTO series (nome,genero)  VALUES (?,?)',[$nomeSerie,$generoSerie])){ # Inserindo na tabela series os valores de nome e genero
         return redirect('/'); # Redirecionando para a rota /series 
@@ -105,29 +121,29 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     public function edit(string $id)
     {
         $serie = Serie::findOrFail($id); // Encontre a série pelo ID
-        return view('series.edit') -> with('serie',$serie);
+        return view('series.edit')->with('serie', $serie);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-{
-    // Validação dos dados recebidos (ajuste conforme necessário)
-    $request->validate([
-        'nome' => 'required|string|max:255',
-        'genero' => 'required|string|max:255',
-        'poster' => 'required|string|max:255',
-    ]);
+    {
+        // Validação dos dados recebidos (ajuste conforme necessário)
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'genero' => 'required|string|max:255',
+            'poster' => 'required|string|max:255',
+        ]);
 
-    $serie = Serie::findOrFail($id); // Encontre a série pelo ID
-    $serie->nome = $request->input('nome'); // Atualize o nome
-    $serie->genero = $request->input('genero'); // Atualize o gênero
-    $serie -> poster = $request -> input('poster');
-    $serie->save(); // Salve as mudanças
+        $serie = Serie::findOrFail($id); // Encontre a série pelo ID
+        $serie->nome = $request->input('nome'); // Atualize o nome
+        $serie->genero = $request->input('genero'); // Atualize o gênero
+        $serie->poster = $request->input('poster');
+        $serie->save(); // Salve as mudanças
 
-    return redirect('/'); // Redirecione para a lista de séries
-}
+        return redirect('/'); // Redirecione para a lista de séries
+    }
 
 
 
@@ -142,6 +158,5 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         $serie->delete();
 
         return redirect('/');
-
     }
 }
