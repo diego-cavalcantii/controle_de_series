@@ -45,30 +45,12 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         ];
 
         // Se o gênero não estiver no mapeamento, use 'Ação' como padrão
-        $generoNome = $generoMap[$genero] ?? 'Ação';
+        $generoNome = $generoMap[$genero];
 
         // Pegue as séries do banco de dados com o gênero especificado
         $series = Serie::where('genero', $generoNome)->get();
 
         return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
-    }
-
-    public function comedia()
-    {
-        $series = Serie::where('genero', 'Comedia')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexComedia')->with('series', $series); # Retornando a view listar-series
-    }
-
-    public function drama()
-    {
-        $series = Serie::where('genero', 'Drama')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexDrama')->with('series', $series); # Retornando a view listar-series
-    }
-
-    public function terror()
-    {
-        $series = Serie::where('genero', 'Terror')->get(); # Pegando todos os valores da tabela series
-        return view('series.indexTerror')->with('series', $series); # Retornando a view listar-series
     }
     //
 
