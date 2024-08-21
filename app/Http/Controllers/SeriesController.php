@@ -72,7 +72,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     public function edit(string $id)
     {
         $serie = Serie::findOrFail($id); // Encontre a série pelo ID
-        return view('series.edit', compact('serie')); // Retorne a view de edição com os dados da série
+        return view('series.edit') -> with('serie',$serie);
     }
 
     /**
@@ -94,18 +94,19 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     return redirect('/series'); // Redirecione para a lista de séries
 }
 
+
+
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        // Encontre a série pelo ID
         $serie = Serie::findOrFail($id);
-    
-        // Exclua a série
+
         $serie->delete();
-    
-        // Redirecione para a lista de séries
+
         return redirect('/series');
+
     }
 }
