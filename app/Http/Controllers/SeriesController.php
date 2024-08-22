@@ -76,6 +76,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         ]);
 
         if ($validator->fails()) {
+            session()->put('errors', $validator->errors());
             return redirect()->back()->withErrors($validator)->withInput();
         }
 

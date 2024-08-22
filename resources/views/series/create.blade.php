@@ -1,11 +1,4 @@
 <x-layout title="Nova Série">
-  <!-- Mensagem de sucesso -->
-  @if (Session::has('success'))
-    <div class="alert alert-success">
-      {{ Session::get('success') }}
-    </div>
-  @endif
-
   <!-- Mensagem de erro -->
   @if ($errors->any())
     <div class="alert alert-danger">
