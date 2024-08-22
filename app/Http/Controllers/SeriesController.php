@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Serie;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 
 # Controller - classe com ações e metodos que são executados quando uma rota é acessada
@@ -36,6 +36,8 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     public function moviesGenero(Request $request)
     {
 
+
+
         $genero = $request->route('genero');
 
         $generoMap = [
@@ -47,7 +49,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         ];
 
         // Se o gênero não estiver no mapeamento, use 'Ação' como padrão
-        $generoNome = $generoMap[$genero];
+        $generoNome = $generoMap[$genero] ?? 'Ação';
 
         // Pegue as séries do banco de dados com o gênero especificado
         $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
