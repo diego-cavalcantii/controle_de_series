@@ -29,7 +29,7 @@
 
 .button:hover {
   transition-duration: 0.3s;
-  background-color:#dc3545;
+  background-color: #dc3545;
   align-items: center;
   gap: 0;
 }
@@ -42,6 +42,7 @@
   transition-duration: 0.5s;
   transform: rotate(160deg);
 }
+
 /*Button DELETE*/
 
 /*Button UPDATE*/
@@ -60,6 +61,7 @@
   overflow: hidden;
   transition: all 0.3s;
 }
+
 .editBtn::before {
   content: "";
   width: 200%;
@@ -80,9 +82,11 @@
   transition: all 0.2s;
   transform-origin: bottom;
 }
+
 .editBtn:hover svg {
   transform: rotate(-15deg) translateX(5px);
 }
+
 .editBtn::after {
   content: "";
   width: 25px;
@@ -97,11 +101,13 @@
   transform-origin: left;
   transition: transform 0.5s ease-out;
 }
+
 .editBtn:hover::after {
   transform: scaleX(1);
   left: 0px;
   transform-origin: right;
 }
+
 /*Button UPDATE*/
 
 /*Button SAVE*/
@@ -137,6 +143,7 @@
 .sign svg path {
   fill: white;
 }
+
 /* text */
 .text {
   position: absolute;
@@ -148,6 +155,7 @@
   font-weight: 600;
   transition-duration: .3s;
 }
+
 /* hover effect on button width */
 .Btn:hover {
   width: 125px;
@@ -160,6 +168,7 @@
   transition-duration: .3s;
   padding-left: 20px;
 }
+
 /* hover effect button's text */
 .Btn:hover .text {
   opacity: 1;
@@ -167,10 +176,12 @@
   transition-duration: .3s;
   padding-right: 10px;
 }
+
 /* button click effect*/
 .Btn:active {
-  transform: translate(2px ,2px);
+  transform: translate(2px, 2px);
 }
+
 .success {
   background-color: #28a745;
   margin-top: 10px;
@@ -180,6 +191,7 @@
     color: white;
   }
 }
+
 /*Button SAVE*/
 
 
@@ -189,12 +201,13 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  transform: scaleX(-1);transform: scaleX(-1);
+  transform: scaleX(-1);
+  transform: scaleX(-1);
   filter: brightness(0) invert(1);
 }
 
 
-/* From Uiverse.io by gharsh11032000 */ 
+/* From Uiverse.io by gharsh11032000 */
 .search {
   position: relative;
   border: none;
@@ -214,33 +227,15 @@
   overflow: hidden;
 }
 
-.search span {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.search::before {
-  content: "";
-  position: absolute;
+.search:hover {
   background-color: #007bff;
-  width: 100%;
-  height: 100%;
-  left: 0%;
-  bottom: 0%;
-  transform: translate(-100%, 100%);
-  border-radius: inherit;
+  transition: all 0.3s ease-in;
 }
 
 .search svg {
   fill: #333;
   transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-}
-
-.search:hover::before {
-  animation: shakeBack 0.6s forwards;
+  width: min-content;
 }
 
 .search:hover svg {
@@ -248,11 +243,11 @@
   scale: 1.3;
 }
 
-.search:active {
+/* .search:active {
   box-shadow: none;
-}
+} */
 
-@keyframes shakeBack {
+/* @keyframes shakeBack {
   0% {
     transform: translate(-100%, 100%);
   }
@@ -264,6 +259,4 @@
   100% {
     transform: translate(0%, 0%);
   }
-}
-
-
+} */

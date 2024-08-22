@@ -35,9 +35,6 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
 
     public function moviesGenero(Request $request)
     {
-        $request->validate([
-            'genero' => 'required|string|max:255',
-        ]);
 
         $genero = $request->route('genero');
 
@@ -46,22 +43,16 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
             'comedia' => 'Comédia',
             'drama' => 'Drama',
             'suspense' => 'Suspense',
-            'terror' => 'Terror'
+            'terror' => 'Terror',
+            'todos' => 'Todos'
         ];
 
-        // Se o gênero não estiver no mapeamento, use 'Ação' como padrão
         $generoNome = $generoMap[$genero];
 
-        // Pegue as séries do banco de dados com o gênero especificado
         $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
-
         return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
     }
-    //
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('series.create');
@@ -126,11 +117,17 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
     public function update(Request $request, string $id)
     {
         // Validação dos dados recebidos (ajuste conforme necessário)
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'poster' => 'required|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            session()->put('errors', $validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 
         $serie = Serie::findOrFail($id); // Encontre a série pelo ID
         $serie->nome = $request->input('nome'); // Atualize o nome
