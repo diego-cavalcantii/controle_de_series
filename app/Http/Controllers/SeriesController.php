@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Serie;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 
 # Controller - classe com ações e metodos que são executados quando uma rota é acessada
@@ -67,11 +69,16 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'genero' => 'required|string|max:255',
             'poster' => 'required|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 
         $serie = new Serie();
         $nomeSerie = $request->input('nome'); # Pegando o valor do parametro nome da requisição
@@ -84,8 +91,11 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         $serie->poster = $posterSerie;
         $serie->save(); # Salvando os valores na tabela series
 
+        Session::flash('success', 'Série adicionada com sucesso!');
+
+
         //(DB::insert('INSERT INTO series (nome,genero)  VALUES (?,?)',[$nomeSerie,$generoSerie])){ # Inserindo na tabela series os valores de nome e genero
-        return redirect('/'); # Redirecionando para a rota /series 
+        return redirect('/'); # Redirecionando para a rota /series
 
     }
 
