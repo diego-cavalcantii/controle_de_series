@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [SeriesController::class, 'index']); // Rota principal que chama o método index
+// Route::get('/series/todos', [SeriesController::class, 'index']); // Rota principal que chama o método index
 
 Route::get('/series/criar', [SeriesController::class, 'create']); // Rota para criar uma nova série
 

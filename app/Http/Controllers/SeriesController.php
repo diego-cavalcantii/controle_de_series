@@ -35,8 +35,9 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
 
     public function moviesGenero(Request $request)
     {
-
-
+        $request->validate([
+            'genero' => 'required|string|max:255',
+        ]);
 
         $genero = $request->route('genero');
 
@@ -49,7 +50,7 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         ];
 
         // Se o gênero não estiver no mapeamento, use 'Ação' como padrão
-        $generoNome = $generoMap[$genero] ?? 'Ação';
+        $generoNome = $generoMap[$genero];
 
         // Pegue as séries do banco de dados com o gênero especificado
         $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
