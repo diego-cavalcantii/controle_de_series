@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Serie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use App\Models\Genero;
 
 
 # Controller - classe com ações e metodos que são executados quando uma rota é acessada
@@ -16,9 +17,7 @@ use Illuminate\Support\Facades\Session;
 
 class SeriesController extends Controller # Recebia por parametro um requisão e retornava uma resposta
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()  # Método index que recebe uma requisição e retorna uma resposta
     {
         //return $request -> url(); # Pegando o valor do parametro id da requisição / na url se acessa com ?id=1
@@ -35,27 +34,27 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
 
     public function moviesGenero(Request $request)
     {
+        $generoSlug = $request->route('genero');
 
-        $genero = $request->route('genero');
+        // Busca o gênero na tabela 'genero' usando o slug fornecido na URL
+        $genero = Genero::whereRaw('LOWER(nome_genero) = ?', [strtolower($generoSlug)])->first();
 
-        $generoMap = [
-            'acao' => 'Ação',
-            'comedia' => 'Comédia',
-            'drama' => 'Drama',
-            'suspense' => 'Suspense',
-            'terror' => 'Terror',
-            'todos' => 'Todos'
-        ];
+        // Se o gênero for encontrado, use o nome dele, caso contrário, defina como null
+        $generoNome = $genero ? $genero->nome_genero : null;
 
-        $generoNome = $generoMap[$genero];
+        // Se 'todos' for selecionado, busca todas as séries; caso contrário, busca as séries do gênero especificado
+        if ($generoSlug === 'todos') {
+            $series = Serie::orderBy('nome', 'asc')->get();
+        } else {
+            $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
+        }
 
-        $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
         return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
     }
-
     public function create()
     {
-        return view('series.create');
+        $generos = Genero::all();
+        return view('series.create', ['generos' => $generos]);
     }
 
     /**
@@ -94,26 +93,13 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
+        $generos = Genero::all();
         $serie = Serie::findOrFail($id); // Encontre a série pelo ID
-        return view('series.edit')->with('serie', $serie);
+        return view('series.edit', ['serie' => $serie, 'generos' => $generos]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         // Validação dos dados recebidos (ajuste conforme necessário)
@@ -137,13 +123,27 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
 
         return redirect('/'); // Redirecione para a lista de séries
     }
+    public function editGenero()
+    {
+        return view('series.addGenero');
+    }
+    public function storeGenero(Request $request)
+    {
+        // Validação básica
+        $request->validate([
+            'genero' => 'required|string|max:255',
+        ]);
+
+        $genero = ucwords($request->input('genero'));
+
+        Genero::create([
+            'nome_genero' => $genero
+        ]);
+
+        return redirect('/')->with('success', 'Gênero adicionado com sucesso!');
+    }
 
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $serie = Serie::findOrFail($id);

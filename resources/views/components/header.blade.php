@@ -2,13 +2,17 @@
     <nav>
         <h1>{{ $title }}</h1>
         <form id="filterForm">
-            <select name="genero" id="genero" class="form-control">
+            <select name="genero" id="genero" class="brutalist-input ">
                 <option value="" disabled selected>Selecione o Gênero</option>
-                <option value="/acao">Ação</option>
+                @foreach($generos as $genero){
+                <option value="{{'/'.$genero->nome_genero }}">{{ $genero->nome_genero }}</option>
+                }
+                @endforeach
+                <!-- <option value="/acao">Ação</option>
                 <option value="/drama">Drama</option>
                 <option value="/terror">Terror</option>
                 <option value="/suspense">Suspense</option>
-                <option value="/comedia">Comédia</option>
+                <option value="/comedia">Comédia</option> -->
                 <option value="/todos">Todos</option>
             </select>
             <button type="submit" class="search">
