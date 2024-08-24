@@ -13,7 +13,7 @@
                 <option value="/terror">Terror</option>
                 <option value="/suspense">Suspense</option>
                 <option value="/comedia">Comédia</option> -->
-                <option value="/todos">Todos</option>
+                <option style="background-color:crimson; color:#fff;" value="/todos">Todos</option>
             </select>
             <button type="submit" class="search">
                 <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">

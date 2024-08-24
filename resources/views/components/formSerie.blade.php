@@ -5,18 +5,19 @@
     @method('PUT')
     @endif
 
-    @if($errors->any())
-    <div class="alert alert-danger" style="display:flex; gap:20px; align-items:center; width:fit-content;">
-        <img src="https://cdn-icons-png.flaticon.com/512/1980/1980005.png" alt="imagem de alter" style="width:50px; height:50px;">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li style="list-style:none;">{{$error}}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
 
     <div class="form">
+        @if($errors->any())
+        <div class="alert alert-danger" style="display:flex; gap:20px; align-items:center; width:fit-content;">
+            <img src="https://cdn-icons-png.flaticon.com/512/1980/1980005.png" alt="imagem de alter" style="width:50px; height:50px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li style="list-style:none;">{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <div class="input">
             <label for="nome">Nome:</label>
             <input type="text" name="nome" id="nome" value="{{ $serie->nome ?? '' }}" required>
@@ -30,7 +31,10 @@
                 <option value="{{ $genero->nome_genero }}">{{ $genero->nome_genero }}</option>
                 @endforeach
             </select>
-            <a href="{{ url('/series/add-genero') }}">Adicionar um gênero</a>
+            <div class="edit-genero">
+                <a class="btn btn-primary" href="{{ url('/generos/criar') }}">Adicionar um gênero</a>
+                <a class="btn btn-primary" href="{{ url('/generos') }}">Apagar um gênero</a>
+            </div>
         </div>
 
         <div class="input">

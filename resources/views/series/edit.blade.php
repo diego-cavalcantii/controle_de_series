@@ -1,5 +1,5 @@
 <x-layout title="Editar Série">
-  <x-form
+  <x-formSerie
     :action="url('/series/'.$serie->id)"
     :serie="$serie"
     :isEdit="true"

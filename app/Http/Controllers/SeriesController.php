@@ -9,27 +9,74 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\Genero;
 
-
-# Controller - classe com ações e metodos que são executados quando uma rota é acessada
-# Model - classe que representa uma tabela do banco de dados
-# View - arquivo que contém o código html que será exibido ao usuário
-# Route - arquivo que contém as rotas da aplicação
-
-class SeriesController extends Controller # Recebia por parametro um requisão e retornava uma resposta
+class SeriesController extends Controller
 {
 
-    public function index()  # Método index que recebe uma requisição e retorna uma resposta
+    public function index()
     {
-        //return $request -> url(); # Pegando o valor do parametro id da requisição / na url se acessa com ?id=1
-        //return redirect('https://google.com'); # Redirecionando para a rota google.com
-        $series = Serie::query()->orderBy('nome', 'asc')->get(); # Pegando todos os valores da tabela series
-        //dd($series); # Função que exibe o valor da variavel e para a execução do código
-
-        // return view('listar-series',[
-        //     'series' => $series // variavel que vai ser passada para a view e valor que ela vai receber
-        // ]); # Retornando a view listar-series
+        $series = Serie::query()->orderBy('nome', 'asc')->get();
 
         return view('series.index')->with('series', $series); # Retornando a view listar-series
+    }
+
+    public function create()
+    {
+        $generos = Genero::all();
+        return view('series.create', ['generos' => $generos]);
+    }
+
+    public function store(Request $request)
+    {
+        // Validação dos dados do formulário
+        // $validator = Validator::make($request->all(), [
+        //     'nome' => 'required|string|max:255',
+        //     'genero' => 'required|string|max:255',
+        //     'poster' => 'required|string|max:255',
+        // ]);
+
+        // // Verifica se a validação falhou
+        // if ($validator->fails()) {
+        //     // Armazena os erros na sessão e redireciona de volta com os erros e os inputs antigos
+        //     session()->put('errors', $validator->errors());
+        //     return redirect()->back()->withErrors($validator)->withInput();
+        // }
+
+        Serie::create($request->all());
+        return redirect('/');
+    }
+
+    public function edit(string $id)
+    {
+        $generos = Genero::all();
+        $serie = Serie::findOrFail($id);
+        return view('series.edit', ['serie' => $serie, 'generos' => $generos]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string|max:255',
+            'genero' => 'required|string|max:255',
+            'poster' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $serie = Serie::findOrFail($id);
+        $serie->nome = $request->input('nome');
+        $serie->genero = $request->input('genero');
+        $serie->poster = $request->input('poster');
+        $serie->save();
+
+        return redirect('/');
+    }
+
+    public function destroy(string $id)
+    {
+        $serie = Serie::findOrFail($id);
+        $serie->delete();
+        return redirect('/');
     }
 
     public function moviesGenero(Request $request)
@@ -39,117 +86,77 @@ class SeriesController extends Controller # Recebia por parametro um requisão e
         // Busca o gênero na tabela 'genero' usando o slug fornecido na URL
         $genero = Genero::whereRaw('LOWER(nome_genero) = ?', [strtolower($generoSlug)])->first();
 
-        // Se o gênero for encontrado, use o nome dele, caso contrário, defina como null
         $generoNome = $genero ? $genero->nome_genero : null;
-
-        // Se 'todos' for selecionado, busca todas as séries; caso contrário, busca as séries do gênero especificado
         if ($generoSlug === 'todos') {
             $series = Serie::orderBy('nome', 'asc')->get();
         } else {
             $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
         }
-
         return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
     }
-    public function create()
+
+    public function indexGenero()
     {
         $generos = Genero::all();
-        return view('series.create', ['generos' => $generos]);
+        return view('generos.index', ['generos' => $generos]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function createGenero()
     {
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:255',
-            'genero' => 'required|string|max:255',
-            'poster' => 'required|string|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            session()->put('errors', $validator->errors());
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-
-        $serie = new Serie();
-        $nomeSerie = $request->input('nome'); # Pegando o valor do parametro nome da requisição
-        $serie->nome = $nomeSerie;
-
-        $generoSerie = $request->input('genero'); # Pegando o valor do parametro nome da requisição
-        $serie->genero = ucwords($generoSerie);
-
-        $posterSerie = $request->input('poster');
-        $serie->poster = $posterSerie;
-        $serie->save(); # Salvando os valores na tabela series
-
-        Session::flash('success', 'Série adicionada com sucesso!');
-
-
-        //(DB::insert('INSERT INTO series (nome,genero)  VALUES (?,?)',[$nomeSerie,$generoSerie])){ # Inserindo na tabela series os valores de nome e genero
-        return redirect('/'); # Redirecionando para a rota /series
-
+        return view('generos.create');
     }
 
-    public function edit(string $id)
-    {
-        $generos = Genero::all();
-        $serie = Serie::findOrFail($id); // Encontre a série pelo ID
-        return view('series.edit', ['serie' => $serie, 'generos' => $generos]);
-    }
-
-    public function update(Request $request, string $id)
-    {
-        // Validação dos dados recebidos (ajuste conforme necessário)
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:255',
-            'genero' => 'required|string|max:255',
-            'poster' => 'required|string|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            session()->put('errors', $validator->errors());
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-
-        $serie = Serie::findOrFail($id); // Encontre a série pelo ID
-        $serie->nome = $request->input('nome'); // Atualize o nome
-        $serie->genero = $request->input('genero'); // Atualize o gênero
-        $serie->poster = $request->input('poster');
-        $serie->save(); // Salve as mudanças
-
-        return redirect('/'); // Redirecione para a lista de séries
-    }
-    public function editGenero()
-    {
-        return view('series.addGenero');
-    }
     public function storeGenero(Request $request)
     {
-        // Validação básica
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'genero' => 'required|string|max:255',
         ]);
-
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $genero = ucwords($request->input('genero'));
-
+        $generoExistente = Genero::where('nome_genero', $genero)->first();
+        if ($generoExistente) {
+            return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
+        }
         Genero::create([
             'nome_genero' => $genero
         ]);
+        return redirect()->back();
+    }
 
-        return redirect('/')->with('success', 'Gênero adicionado com sucesso!');
+    public function editGenero(string $id)
+    {
+        $genero = Genero::findOrFail($id);
+        return view('generos.edit', ['genero' => $genero]);
+    }
+
+    public function updateGenero(Request $request, string $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'genero' => 'required|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $genero = Genero::findOrFail($id);
+        $genero->nome_genero = ucwords($request->input('genero'));
+
+        $generoExistente = Genero::where('nome_genero', $genero->nome_genero)->first();
+        if ($generoExistente) {
+            return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
+        }
+        $genero->save();
+        return redirect('/generos');
     }
 
 
-    public function destroy(string $id)
+
+    public function destroyGenero(string $id)
     {
-        $serie = Serie::findOrFail($id);
-
-        $serie->delete();
-
-        return redirect('/');
+        $genero = Genero::findOrFail($id);
+        $genero->delete();
+        return redirect()->back();
     }
 }
