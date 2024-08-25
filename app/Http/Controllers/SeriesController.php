@@ -43,7 +43,7 @@ class SeriesController extends Controller
 
 
         Serie::create($request->all());
-        return redirect('/series');
+        return to_route('series.index');
     }
 
     public function edit(string $id)
@@ -70,13 +70,13 @@ class SeriesController extends Controller
         $serie->poster = $request->input('poster');
         $serie->save();
 
-        return redirect('/series');
+        return to_route('series.index');
     }
 
     public function destroy(string $id)
     {
         $serie = Serie::findOrFail($id);
         $serie->delete();
-        return redirect('/series');
+        return to_route('series.index');
     }
 }

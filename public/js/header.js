@@ -5,6 +5,6 @@ document.getElementById('filterForm').addEventListener('submit', function (e) {
     window.location.href = '/series' + genero;
   }
   else {
-    window.location.href = '/series';
+    window.location.href = '/';
   }
 });

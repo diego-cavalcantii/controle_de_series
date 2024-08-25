@@ -1,5 +1,5 @@
 <x-layout title="Adicionar Novo Gênero">
   <x-formGenero
-    :action="url('/generos/salvar')"
+    :action="route('generos.store')"
     :isEdit="false" />
 </x-layout>

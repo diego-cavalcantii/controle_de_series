@@ -1,6 +1,6 @@
 <x-layout title="Nova Série">
   <x-formSerie
-    :action="url('/series/salvar')"
+    :action="route('series.store')"
     :isEdit="false"
     :generos="$generos" />
 </x-layout>

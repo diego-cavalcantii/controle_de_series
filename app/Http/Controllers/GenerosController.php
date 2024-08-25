@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\Serie;
 use Illuminate\Support\Facades\Validator;
@@ -28,19 +29,19 @@ class GenerosController extends Controller
         return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
     }
 
-    public function indexGenero()
+    public function index()
     {
         $generos = Genero::all();
         return view('generos.index', ['generos' => $generos]);
     }
 
 
-    public function createGenero()
+    public function create()
     {
         return view('generos.create');
     }
 
-    public function storeGenero(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'genero' => 'required|string|max:255',
@@ -59,13 +60,13 @@ class GenerosController extends Controller
         return redirect()->back();
     }
 
-    public function editGenero(string $id)
+    public function edit(string $id)
     {
         $genero = Genero::findOrFail($id);
         return view('generos.edit', ['genero' => $genero]);
     }
 
-    public function updateGenero(Request $request, string $id)
+    public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
             'genero' => 'required|string|max:255',
@@ -81,12 +82,12 @@ class GenerosController extends Controller
             return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
         }
         $genero->save();
-        return redirect('/generos');
+        return to_route('generos.index');
     }
 
 
 
-    public function destroyGenero(string $id)
+    public function destroy(string $id)
     {
         $genero = Genero::findOrFail($id);
         $genero->delete();
