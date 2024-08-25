@@ -41,8 +41,9 @@ class SeriesController extends Controller
         //     return redirect()->back()->withErrors($validator)->withInput();
         // }
 
+
         Serie::create($request->all());
-        return redirect('/');
+        return redirect('/series');
     }
 
     public function edit(string $id)
@@ -69,94 +70,13 @@ class SeriesController extends Controller
         $serie->poster = $request->input('poster');
         $serie->save();
 
-        return redirect('/');
+        return redirect('/series');
     }
 
     public function destroy(string $id)
     {
         $serie = Serie::findOrFail($id);
         $serie->delete();
-        return redirect('/');
-    }
-
-    public function moviesGenero(Request $request)
-    {
-        $generoSlug = $request->route('genero');
-
-        // Busca o gênero na tabela 'genero' usando o slug fornecido na URL
-        $genero = Genero::whereRaw('LOWER(nome_genero) = ?', [strtolower($generoSlug)])->first();
-
-        $generoNome = $genero ? $genero->nome_genero : null;
-        if ($generoSlug === 'todos') {
-            $series = Serie::orderBy('nome', 'asc')->get();
-        } else {
-            $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
-        }
-        return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
-    }
-
-    public function indexGenero()
-    {
-        $generos = Genero::all();
-        return view('generos.index', ['generos' => $generos]);
-    }
-
-
-    public function createGenero()
-    {
-        return view('generos.create');
-    }
-
-    public function storeGenero(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'genero' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $genero = ucwords($request->input('genero'));
-        $generoExistente = Genero::where('nome_genero', $genero)->first();
-        if ($generoExistente) {
-            return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
-        }
-        Genero::create([
-            'nome_genero' => $genero
-        ]);
-        return redirect()->back();
-    }
-
-    public function editGenero(string $id)
-    {
-        $genero = Genero::findOrFail($id);
-        return view('generos.edit', ['genero' => $genero]);
-    }
-
-    public function updateGenero(Request $request, string $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'genero' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $genero = Genero::findOrFail($id);
-        $genero->nome_genero = ucwords($request->input('genero'));
-
-        $generoExistente = Genero::where('nome_genero', $genero->nome_genero)->first();
-        if ($generoExistente) {
-            return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
-        }
-        $genero->save();
-        return redirect('/generos');
-    }
-
-
-
-    public function destroyGenero(string $id)
-    {
-        $genero = Genero::findOrFail($id);
-        $genero->delete();
-        return redirect()->back();
+        return redirect('/series');
     }
 }

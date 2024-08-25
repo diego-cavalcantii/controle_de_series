@@ -26,7 +26,7 @@
         <div class="input">
             <label for="genero">Gênero:</label>
             <select name="genero" id="genero" required>
-                <option value="" default>{{ $serie->genero ?? 'Selecione o gênero' }}</option>
+                <option value="{{ $serie->genero ?? '' }}" default>{{ $serie->genero ?? 'Selecione o gênero' }}</option>
                 @foreach($generos as $genero)
                 <option value="{{ $genero->nome_genero }}">{{ $genero->nome_genero }}</option>
                 @endforeach
