@@ -8,25 +8,16 @@
 
 
     <div class="form">
-        @if($errors->any())
-        <div class="alert alert-danger" style="display:flex; gap:20px; align-items:center; width:fit-content;">
-            <img src="https://cdn-icons-png.flaticon.com/512/1980/1980005.png" alt="imagem de alter" style="width:50px; height:50px;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li style="list-style:none;">{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+
 
         <div class="input">
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" value="{{ $serie->nome ?? '' }}" required>
+            <input type="text" name="nome" id="nome" value="{{ $serie->nome ?? '' }}" >
         </div>
 
         <div class="input">
             <label for="genero">Gênero:</label>
-            <select name="genero" id="genero" required>
+            <select name="genero" id="genero" >
                 <option value="{{ $serie->genero ?? '' }}" default>{{ $serie->genero ?? 'Selecione o gênero' }}</option>
                 @foreach($generos as $genero)
                 <option value="{{ $genero->nome_genero }}">{{ $genero->nome_genero }}</option>
@@ -40,7 +31,7 @@
 
         <div class="input">
             <label for="poster">Link do Poster:</label>
-            <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" required>
+            <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" >
         </div>
 
         <div class="box-button">

@@ -5,16 +5,6 @@
     @method('PUT')
     @endif
 
-    @if($errors->any())
-    <div class="alert alert-danger" style="display:flex; gap:20px; align-items:center; width:fit-content;">
-      <img src="https://cdn-icons-png.flaticon.com/512/1980/1980005.png" alt="imagem de erro" style="width:50px; height:50px;">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li style="list-style:none;">{{$error}}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
 
     <div class="mb-3">
       <label for="genero" class="form-label">Gênero</label>

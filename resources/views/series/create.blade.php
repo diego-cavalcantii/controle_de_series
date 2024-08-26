@@ -2,5 +2,5 @@
   <x-formSerie
     :action="route('series.store')"
     :isEdit="false"
-    :generos="$generos" />
+    :generos="$generos"/>
 </x-layout>

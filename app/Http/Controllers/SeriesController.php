@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SeriesFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Serie;
@@ -29,7 +30,7 @@ class SeriesController extends Controller
         return view('series.create', ['generos' => $generos]);
     }
 
-    public function store(Request $request)
+    public function store(SeriesFormRequest $request)
     {
         // Validação dos dados do formulário
         // $validator = Validator::make($request->all(), [
@@ -57,7 +58,7 @@ class SeriesController extends Controller
         return view('series.edit', ['serie' => $id, 'generos' => $generos]);
     }
 
-    public function update(Serie $id, Request $request)
+    public function update(Serie $id, SeriesFormRequest $request)
     {
 //        $validator = Validator::make($request->all(), [
 //            'nome' => 'required|string|max:255',
