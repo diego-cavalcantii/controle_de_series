@@ -1,6 +1,7 @@
 <!-- resources/views/components/form.blade.php -->
 <form action="{{ $action }}" method="POST" class="container-form">
     @csrf
+
     @if($isEdit)
     @method('PUT')
     @endif

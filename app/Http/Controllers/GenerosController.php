@@ -87,10 +87,9 @@ class GenerosController extends Controller
 
 
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        $genero = Genero::findOrFail($id);
-        $genero->delete();
+        Genero::destroy($request->id);
         return redirect()->back();
     }
 }

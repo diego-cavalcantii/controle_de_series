@@ -15,8 +15,12 @@ class SeriesController extends Controller
     public function index()
     {
         $series = Serie::query()->orderBy('nome', 'asc')->get();
+        $mensagemSucesso = session('success');
 
-        return view('series.index')->with('series', $series); # Retornando a view listar-series
+
+
+        return view('series.index')->with('series', $series)
+            ->with('mensagemSucesso', $mensagemSucesso); # Retornando a view listar-series
     }
 
     public function create()
@@ -42,41 +46,45 @@ class SeriesController extends Controller
         // }
 
 
-        Serie::create($request->all());
-        return to_route('series.index');
+        $serie = Serie::create($request->all());
+
+        return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!");
     }
 
-    public function edit(string $id)
+    public function edit(Serie $id)
     {
         $generos = Genero::all();
-        $serie = Serie::findOrFail($id);
-        return view('series.edit', ['serie' => $serie, 'generos' => $generos]);
+        return view('series.edit', ['serie' => $id, 'generos' => $generos]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Serie $id, Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:255',
-            'genero' => 'required|string|max:255',
-            'poster' => 'required|string|max:255',
-        ]);
+//        $validator = Validator::make($request->all(), [
+//            'nome' => 'required|string|max:255',
+//            'genero' => 'required|string|max:255',
+//            'poster' => 'required|string|max:255',
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return redirect()->back()->withErrors($validator)->withInput();
+//        }
+//        $serie = Serie::findOrFail($id);
+//        $serie->nome = $request->input('nome');
+//        $serie->genero = $request->input('genero');
+//        $serie->poster = $request->input('poster');
+//        $serie->save();
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $serie = Serie::findOrFail($id);
-        $serie->nome = $request->input('nome');
-        $serie->genero = $request->input('genero');
-        $serie->poster = $request->input('poster');
-        $serie->save();
+        $id->update($request->all());
 
-        return to_route('series.index');
+
+        return to_route('series.index')->with('success', "Série {$id->nome} atualizada com sucesso!");
     }
 
-    public function destroy(string $id)
+    public function destroy(Serie $id)
     {
-        $serie = Serie::findOrFail($id);
-        $serie->delete();
-        return to_route('series.index');
+
+        $id->delete();
+
+        return to_route('series.index')->with('success', "Série {$id->nome} deletada com sucesso!");
     }
 }

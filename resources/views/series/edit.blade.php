@@ -1,4 +1,4 @@
-<x-layout title="Editar Série">
+<x-layout title="Editar Série:  {{$serie->nome}} ">
   <x-formSerie
     :action="route('series.update', $serie->id)"
     :serie="$serie"
