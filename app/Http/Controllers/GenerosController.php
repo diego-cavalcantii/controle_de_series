@@ -38,7 +38,8 @@ class GenerosController extends Controller
 
     public function create()
     {
-        return view('generos.create');
+        $mensagemSucesso = session('success');
+        return view('generos.create')->with('mensagemSucesso', $mensagemSucesso);;
     }
 
     public function store(Request $request)
@@ -57,7 +58,7 @@ class GenerosController extends Controller
         Genero::create([
             'nome_genero' => $genero
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('success', "genero criada com sucesso!");
     }
 
     public function edit(string $id)
