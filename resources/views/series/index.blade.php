@@ -9,14 +9,14 @@
 
   <ul class="movie-list">
     @foreach($series as $serie)
-    <div class="movie-box">
+    <li class="movie-box">
       <div class="box-img">
         <img class="poster" src="{{ $serie->poster}}" alt="poster da série">
       </div>
       <div class="box-info">
         <div>
-          <h2>{{ ucwords($serie->nome) }}</h2>
-          <p>{{ ucwords($serie->genero) }}</p>
+          <h2><a href="{{ route('seasons.index',$serie->id) }}">{{ ucwords($serie->nome) }}</a></h2>
+          <p>{{ ucwords($serie->generos->nome_genero) }}</p>
         </div>
         <div style="display:flex; gap:5px; flex-direction:column; align-items:center;">
 
@@ -70,7 +70,7 @@
           </form>
         </div>
       </div>
-    </div>
+    </li>
     @endforeach
   </ul>
 </x-layout>

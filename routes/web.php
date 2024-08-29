@@ -28,3 +28,6 @@ Route::controller(GenerosController::class)->group(function () {
   Route::delete('/generos/{id}', 'destroy')->name('generos.destroy'); // Rota para deletar um gênero
   Route::get('/series/{genero}', 'moviesGenero'); // Rota para filtrar séries por gênero
 });
+
+
+Route::get('/series/{series}/seasons',[\App\Http\Controllers\SeasonsController::class, 'index'])->name('seasons.index');

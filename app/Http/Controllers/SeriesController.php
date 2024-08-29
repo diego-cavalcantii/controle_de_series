@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
+use App\Models\Episode;
+use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Serie;
@@ -15,13 +17,16 @@ class SeriesController extends Controller
 
     public function index()
     {
-        $series = Serie::query()->orderBy('nome', 'asc')->get();
+
+        $series = Serie::with(['generos','seasons'])->get();
+        $generos = Genero::all();
         $mensagemSucesso = session('success');
 
 
-
         return view('series.index')->with('series', $series)
-            ->with('mensagemSucesso', $mensagemSucesso); # Retornando a view listar-series
+            ->with('mensagemSucesso', $mensagemSucesso)
+            ->with('generos',$generos); # Retornando a view listar-series
+
     }
 
     public function create()
@@ -32,23 +37,30 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        // Validação dos dados do formulário
-        // $validator = Validator::make($request->all(), [
-        //     'nome' => 'required|string|max:255',
-        //     'genero' => 'required|string|max:255',
-        //     'poster' => 'required|string|max:255',
-        // ]);
 
-        // // Verifica se a validação falhou
-        // if ($validator->fails()) {
-        //     // Armazena os erros na sessão e redireciona de volta com os erros e os inputs antigos
-        //     session()->put('errors', $validator->errors());
-        //     return redirect()->back()->withErrors($validator)->withInput();
-        // }
-
-
+//        dd($request->all());
         $serie = Serie::create($request->all());
+        $seasons = [];
+        for ($i = 1; $i <= $request->seasonsQty; $i++) {
+            $seasons[] = [
+                'series_id' => $serie->id,
+                'numero' => $i
+            ];
+        }
+        Season::insert($seasons);
 
+        $episodes = [];
+        foreach($serie->seasons as $season){
+            for($j = 1; $j <= $request->episodesPerSeason; $j++){
+                $episodes[] = [
+                    'season_id' => $season->id,
+                    'numero' => $j
+                ];
+            }
+        }
+        Episode::insert($episodes);
+
+        // Redireciona com uma mensagem de sucesso
         return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!");
     }
 

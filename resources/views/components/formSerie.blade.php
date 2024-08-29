@@ -1,28 +1,27 @@
 <!-- resources/views/components/form.blade.php -->
 <form action="{{ $action }}" method="POST" class="container-form">
     @csrf
-
     @if($isEdit)
-    @method('PUT')
+        @method('PUT')
     @endif
 
-
     <div class="form">
-
-
         <div class="input">
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" value="{{ $serie->nome ?? '' }}" >
+            <input autofocus type="text" name="nome" id="nome" value="{{ $serie->nome ?? '' }}" >
         </div>
 
         <div class="input">
-            <label for="genero">Gênero:</label>
-            <select name="genero" id="genero" >
-                <option value="{{ $serie->genero ?? '' }}" default>{{ $serie->genero ?? 'Selecione o gênero' }}</option>
+            <label for="genero_id">Gênero:</label>
+            <select name="genero_id" id="genero_id">
+                <option value="" disabled {{ !isset($serie) ? 'selected' : '' }}>Selecione o gênero</option>
                 @foreach($generos as $genero)
-                <option value="{{ $genero->nome_genero }}">{{ $genero->nome_genero }}</option>
+                    <option value="{{ $genero->id }}" {{ (isset($serie) && $serie->genero_id == $genero->id) ? 'selected' : '' }}>
+                        {{ $genero->nome_genero }}
+                    </option>
                 @endforeach
             </select>
+
             <div class="edit-genero">
                 <a class="btn btn-primary" href="{{ url('/generos/criar') }}">Adicionar um gênero</a>
                 <a class="btn btn-primary" href="{{ url('/generos') }}">Apagar um gênero</a>
@@ -33,7 +32,16 @@
             <label for="poster">Link do Poster:</label>
             <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" >
         </div>
-
+        <div class="d-flex justify-content-between">
+            <div class="input">
+                <label for="seasonsQty">Nº de Temporadas</label>
+                <input type="text" name="seasonsQty" id="seasonsQty" value="{{ $serie->seasonsQty ?? '' }}" >
+            </div>
+            <div class="input">
+                <label for="episodesPerSeason">Episódios por Temporada</label>
+                <input type="text" name="episodesPerSeason" id="episodesPerSeason" value="{{ $serie->episodesPerSeason ?? '' }}" >
+            </div>
+        </div>
         <div class="box-button">
             <a class="Btn success" href="{{ url('/') }}">
                 <div class="sign">
