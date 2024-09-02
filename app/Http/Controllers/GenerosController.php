@@ -6,7 +6,7 @@ use App\Http\Requests\GenerosFormRequest;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Serie;
+use App\Models\Series;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\Genero;
@@ -25,10 +25,10 @@ class GenerosController extends Controller
     {
         if ($request->genero) {
             $generoEscolhido = Genero::find($request->genero);
-            $serieGenero = Serie::where('genero_id', $generoEscolhido->id)->get();
+            $serieGenero = Series::where('genero_id', $generoEscolhido->id)->get();
             return view('series.index', ['genero' => $generoEscolhido, 'series' => $serieGenero]);
         }else {
-            $series = Serie::all();
+            $series = Series::all();
             return view('series.index', ['series' => $series]);
         }
     }

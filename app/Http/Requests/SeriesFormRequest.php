@@ -25,6 +25,8 @@ class SeriesFormRequest extends FormRequest
             'nome' => 'required|string|min:2|max:30',
             'poster' => 'required|string|max:255',
             'genero_id' => 'required|exists:generos,id',
+            "seasonsQty" => 'required|min:1|max:10',
+            "episodesPerSeason" => "required|min:1|max:20"
         ];
     }
 

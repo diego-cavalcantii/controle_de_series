@@ -10,7 +10,7 @@ class Season extends Model
     use HasFactory;
 
     public function series(){
-        return $this->belongsTo(Serie::class);
+        return $this->belongsTo(Series::class);
     }
 
     public function episodes(){

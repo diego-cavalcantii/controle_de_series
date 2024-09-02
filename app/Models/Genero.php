@@ -12,7 +12,7 @@ class Genero extends Model
     protected $fillable = ['nome_genero'];
 
     public function series(){
-        return $this->hasMany(Serie::class,'genero_id');
+        return $this->hasMany(Series::class,'genero_id');
     }
 
     protected static function booted()
