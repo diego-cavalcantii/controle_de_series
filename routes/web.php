@@ -14,7 +14,7 @@ Route::get('/', function () {
    Route::get('/series', 'index')->name('series.index'); // Rota principal que chama o método index
    Route::get('/series/criar', 'create')->name('series.create'); // Rota para criar uma nova série
    Route::post('/series/salvar', 'store')->name('series.store'); // Rota para salvar uma nova série
-   Route::get('/series/{id}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
+   Route::get('/series/{serie}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
    Route::put('/series/{id}', 'update')->name('series.update'); // Rota para atualizar uma série existente
    Route::delete('/series/{id}', 'destroy')->name('series.destroy'); // Rota para deletar uma série existente
  });

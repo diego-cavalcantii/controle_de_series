@@ -32,16 +32,18 @@
             <label for="poster">Link do Poster:</label>
             <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" >
         </div>
+        @foreach($seasons as $season)
         <div class="d-flex justify-content-between">
             <div class="input">
                 <label for="seasonsQty">Nº de Temporadas</label>
-                <input type="text" name="seasonsQty" id="seasonsQty" value="{{ $serie->seasonsQty ?? '' }}" >
+                <input type="text" name="seasonsQty" id="seasonsQty" value="{{ $season->numero ?? '' }}" >
             </div>
             <div class="input">
                 <label for="episodesPerSeason">Episódios por Temporada</label>
-                <input type="text" name="episodesPerSeason" id="episodesPerSeason" value="{{ $serie->episodesPerSeason ?? '' }}" >
+                <input type="text" name="episodesPerSeason" id="episodesPerSeason" value="{{ $season->episodes->count() ?? '' }}" >
             </div>
         </div>
+        @endforeach
         <div class="box-button">
             <a class="Btn success" href="{{ url('/') }}">
                 <div class="sign">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GenerosFormRequest;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -39,22 +40,14 @@ class GenerosController extends Controller
         return view('generos.create')->with('mensagemSucesso', $mensagemSucesso);
     }
 
-    public function store(Request $request)
+    public function store(GenerosFormRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'genero' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $genero = ucwords($request->input('genero'));
+        $genero = ucwords($request->nome_genero);
         $generoExistente = Genero::where('nome_genero', $genero)->first();
         if ($generoExistente) {
             return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
         }
-        Genero::create([
-            'nome_genero' => $genero
-        ]);
+        Genero::create($request->all());
         return redirect()->back()->with('success', "genero criada com sucesso!");
     }
 
@@ -64,17 +57,10 @@ class GenerosController extends Controller
         return view('generos.edit', ['genero' => $genero]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(GenerosFormRequest $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'genero' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
         $genero = Genero::findOrFail($id);
-        $genero->nome_genero = ucwords($request->input('genero'));
-
+        $genero->nome_genero = ucwords($request->nome_genero);
         $generoExistente = Genero::where('nome_genero', $genero->nome_genero)->first();
         if ($generoExistente) {
             return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();

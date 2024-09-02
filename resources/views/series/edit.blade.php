@@ -3,5 +3,7 @@
     :action="route('series.update', $serie->id)"
     :serie="$serie"
     :isEdit="true"
-    :generos="$generos"/>
+    :generos="$generos"
+    :seasons="$seasons"
+  />
 </x-layout>

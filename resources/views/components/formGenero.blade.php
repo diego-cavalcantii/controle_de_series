@@ -8,7 +8,7 @@
 
     <div class="mb-3">
       <label for="genero" class="form-label">Gênero</label>
-      <input type="text" class="form-control" id="genero" name="genero" required value="{{ $genero->nome_genero ?? '' }}">
+      <input type="text" class="form-control" id="nome_genero" name="nome_genero" required value="{{ $genero->nome_genero ?? '' }}">
     </div>
     <div class="box-button">
       <a class="Btn success" href="{{ route('series.create') }}">

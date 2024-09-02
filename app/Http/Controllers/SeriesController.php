@@ -19,13 +19,11 @@ class SeriesController extends Controller
     {
 
         $series = Serie::with(['generos','seasons'])->get();
-        $generos = Genero::all();
         $mensagemSucesso = session('success');
 
 
         return view('series.index')->with('series', $series)
-            ->with('mensagemSucesso', $mensagemSucesso)
-            ->with('genero',$generos); # Retornando a view listar-series
+            ->with('mensagemSucesso', $mensagemSucesso); # Retornando a view listar-series
 
     }
 
@@ -37,9 +35,12 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-
-//        dd($request->all());
+        $serieExistente = Serie::where('nome', $request->nome)->first();
+        if ($serieExistente) {
+            return redirect()->back()->withErrors(['nome' => 'Essa série já existe no banco de dados.'])->withInput();
+        }
         $serie = Serie::create($request->all());
+
         $seasons = [];
         for ($i = 1; $i <= $request->seasonsQty; $i++) {
             $seasons[] = [
@@ -61,13 +62,15 @@ class SeriesController extends Controller
         Episode::insert($episodes);
 
         // Redireciona com uma mensagem de sucesso
-        return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!");
+        return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!")->with('series', Serie::all())->with('genero', Genero::all());
     }
 
-    public function edit(Serie $id)
+    public function edit(Serie $serie)
     {
+        $seasons = $serie->seasons()->with('episodes')->get();
         $generos = Genero::all();
-        return view('series.edit', ['serie' => $id, 'generos' => $generos]);
+        return view('series.edit', ['serie' => $serie, 'generos' => $generos, 'seasons' => $seasons]);
+
     }
 
     public function update(Serie $id, SeriesFormRequest $request)
@@ -87,6 +90,7 @@ class SeriesController extends Controller
 //        $serie->poster = $request->input('poster');
 //        $serie->save();
 
+        dd($request->all());
         $id->update($request->all());
 
 
