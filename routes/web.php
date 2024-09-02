@@ -21,12 +21,12 @@ Route::get('/', function () {
 
 Route::controller(GenerosController::class)->group(function () {
   Route::get('/generos', 'index')->name('generos.index'); // Rota para listar todos os gêneros
+    Route::post('/generos/show', 'show')->name('generos.show');
   Route::get('/generos/criar', 'create')->name('generos.create'); // Rota para adicionar um novo gênero
   Route::post('/generos/salvar', 'store')->name('generos.store'); // Rota para salvar um novo gênero
   Route::get('/generos/{id}/editar', 'edit')->name('generos.edit'); // Rota para editar um gênero
   Route::put('/generos/{id}', 'update')->name('generos.update'); // Rota para atualizar um gênero
   Route::delete('/generos/{id}', 'destroy')->name('generos.destroy'); // Rota para deletar um gênero
-  Route::get('/series/{genero}', 'moviesGenero'); // Rota para filtrar séries por gênero
 });
 
 

@@ -13,6 +13,7 @@ class Serie extends Model
     use HasFactory;
     protected $fillable = ['nome', 'poster', 'genero_id'];
 
+
     public function generos() {
         return $this->belongsTo(Genero::class,'genero_id');
     }

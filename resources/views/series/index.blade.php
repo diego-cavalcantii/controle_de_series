@@ -1,4 +1,4 @@
-<x-layout title="Séries">
+<x-layout title="{{ isset($genero) ? 'Séries de ' . $genero->nome_genero : 'Séries' }}">
   <a class="brutalist-input" style="margin-bottom:20px;" href="{{ route('series.create') }}">Adicionar nova Série</a>
 
     @isset($mensagemSucesso)
@@ -15,7 +15,7 @@
       </div>
       <div class="box-info">
         <div>
-          <h2><a href="{{ route('seasons.index',$serie->id) }}">{{ ucwords($serie->nome) }}</a></h2>
+            <a href="{{ route('seasons.index',$serie->id) }}"><h2>{{ ucwords($serie->nome) }}</h2></a>
           <p>{{ ucwords($serie->generos->nome_genero) }}</p>
         </div>
         <div style="display:flex; gap:5px; flex-direction:column; align-items:center;">

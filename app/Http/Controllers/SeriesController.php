@@ -25,7 +25,7 @@ class SeriesController extends Controller
 
         return view('series.index')->with('series', $series)
             ->with('mensagemSucesso', $mensagemSucesso)
-            ->with('generos',$generos); # Retornando a view listar-series
+            ->with('genero',$generos); # Retornando a view listar-series
 
     }
 

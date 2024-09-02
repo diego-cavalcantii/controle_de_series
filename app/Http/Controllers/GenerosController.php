@@ -9,25 +9,10 @@ use App\Models\Serie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\Genero;
+use function GuzzleHttp\json_decode;
 
 class GenerosController extends Controller
 {
-
-    public function moviesGenero(Request $request)
-    {
-        $generoSlug = $request->route('genero');
-
-        // Busca o gênero na tabela 'genero' usando o slug fornecido na URL
-        $genero = Genero::whereRaw('LOWER(nome_genero) = ?', [strtolower($generoSlug)])->first();
-
-        $generoNome = $genero ? $genero->nome_genero : null;
-        if ($generoSlug === 'todos') {
-            $series = Serie::orderBy('nome', 'asc')->get();
-        } else {
-            $series = Serie::where('genero', $generoNome)->orderBy('nome', 'asc')->get();
-        }
-        return view('series.indexGenero', ['series' => $series, 'genero' => $generoNome]);
-    }
 
     public function index()
     {
@@ -35,11 +20,23 @@ class GenerosController extends Controller
         return view('generos.index', ['generos' => $generos]);
     }
 
+    public function show(Request $request)
+    {
+        if ($request->genero) {
+            $generoEscolhido = Genero::find($request->genero);
+            $serieGenero = Serie::where('genero_id', $generoEscolhido->id)->get();
+            return view('series.index', ['genero' => $generoEscolhido, 'series' => $serieGenero]);
+        }else {
+            $series = Serie::all();
+            return view('series.index', ['series' => $series]);
+        }
+    }
+
 
     public function create()
     {
         $mensagemSucesso = session('success');
-        return view('generos.create')->with('mensagemSucesso', $mensagemSucesso);;
+        return view('generos.create')->with('mensagemSucesso', $mensagemSucesso);
     }
 
     public function store(Request $request)

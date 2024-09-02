@@ -1,12 +1,12 @@
 <header>
     <nav>
         <h1>{{ $title }}</h1>
-        <form id="filterForm">
+        <form id="filterForm" action="{{ route('generos.show') }}" method="POST">
+            @csrf
             <select name="genero" id="genero" class="brutalist-input ">
                 <option value="" disabled selected>Selecione o Gênero</option>
-                @foreach($generos as $genero){
-                <option value="{{'/'.$genero->nome_genero }}">{{ $genero->nome_genero }}</option>
-                }
+                @foreach($generos as $genero)
+                    <option value="{{$genero->id}}">{{ $genero->nome_genero }}</option>
                 @endforeach
                 <option style="background-color:crimson; color:#fff;" value="">Todos</option>
             </select>
@@ -19,3 +19,4 @@
 
     </nav>
 </header>
+

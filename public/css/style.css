@@ -157,6 +157,11 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+    h2{
+        color: #333;
+        text-decoration: underline;
+    }
 }
 
 /* container dos filmes */

@@ -1,4 +1,4 @@
-<x-layout title="{{$serie->nome}}">
+<x-layout title="Temporadas de {{ucwords($serie->nome)}}">
     <ul class="movie-list">
         @foreach($seasons as $season)
             <li class="movie-box">
