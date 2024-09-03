@@ -60,13 +60,14 @@ class SeriesController extends Controller
 
     }
 
-    public function update(Series $serie, SeriesFormRequest $request)
+    public function update(Series $id, SeriesFormRequest $request)
     {
-        // Chama o método update do repositório e passa a série e o request
-        $serie = $this->repository->update($serie, $request);
+        dd($request->all());
 
-        // Redireciona para a lista de séries com uma mensagem de sucesso
-        return to_route('series.index')->with('success', "Série {$serie->nome} atualizada com sucesso!");
+        $id->update($request->all());
+
+
+        return to_route('series.index')->with('success', "Série {$id->nome} atualizada com sucesso!");
     }
 
     public function destroy(Series $id)
