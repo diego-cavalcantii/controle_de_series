@@ -15,10 +15,10 @@ class Genero extends Model
         return $this->hasMany(Series::class,'genero_id');
     }
 
-//    protected static function booted()
-//    {
-//        self::addGlobalScope('orderByName', function (Builder $builder) {
-//            $builder->orderBy('nome_genero', 'asc');
-//        });
-//    }
+   protected static function booted()
+   {
+       self::addGlobalScope('orderByName', function (Builder $builder) {
+           $builder->orderBy('nome_genero', 'asc');
+       });
+   }
 }
