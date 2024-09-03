@@ -1,4 +1,4 @@
-<x-layout title="Gêneros">
+<x-layout title="Gêneros" >
   <ul class="list-group" style="margin-bottom: 20px;">
     @foreach($generos as $genero)
     <li class="list-group-item">{{ $genero->nome_genero }}

@@ -41,7 +41,5 @@
     <a href="https://github.com/diego-cavalcantii"><img src="https://cdn-icons-png.flaticon.com/512/1051/1051377.png" alt="icone github"></a>
     <a href="https://www.linkedin.com/in/diego-silva-cavalcanti-a8b2b91a4"><img src="https://cdn-icons-png.flaticon.com/256/174/174857.png" alt="icone linkedin"></a>
   </footer>
-  <script src="{{ asset('js/header.js') }}"></script>
 </body>
-
 </html>

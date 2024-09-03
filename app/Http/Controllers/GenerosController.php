@@ -23,13 +23,14 @@ class GenerosController extends Controller
 
     public function show(Request $request)
     {
+        $mensagemSucesso = session('mensagemSucesso');
         if ($request->genero) {
             $generoEscolhido = Genero::find($request->genero);
             $serieGenero = Series::where('genero_id', $generoEscolhido->id)->get();
-            return view('series.index', ['genero' => $generoEscolhido, 'series' => $serieGenero]);
+            return view('series.index', ['genero' => $generoEscolhido, 'series' => $serieGenero])->with('mensagemSucesso', $mensagemSucesso);
         }else {
             $series = Series::all();
-            return view('series.index', ['series' => $series]);
+            return view('series.index', ['series' => $series])->with('mensagemSucesso', $mensagemSucesso);
         }
     }
 

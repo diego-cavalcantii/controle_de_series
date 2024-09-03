@@ -1,4 +1,4 @@
-<x-layout title="{{ isset($genero) ? 'Séries de ' . $genero->nome_genero : 'Séries' }}">
+<x-layout title="{{ isset($genero) ? 'Séries de ' . $genero->nome_genero : 'Séries' }}" :mensagem-sucesso="$mensagemSucesso">
   <a class="brutalist-input" style="margin-bottom:20px;" href="{{ route('series.create') }}">Adicionar nova Série</a>
 
 

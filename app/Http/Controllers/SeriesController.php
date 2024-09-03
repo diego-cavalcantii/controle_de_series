@@ -17,11 +17,6 @@ use App\Models\Genero;
 class SeriesController extends Controller
 {
 
-    public function  __construct(private SeriesRepository $repository)
-    {
-
-    }
-
     public function index()
     {
 
@@ -43,7 +38,27 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $serie = $this->repository->add($request);
+        $request->merge(['nome' => ucwords($request->nome)]);
+        $serie = Series::create($request->all());
+        $seasons = [];
+        for ($i = 1; $i <= $request->seasonsQty; $i++) {
+            $seasons[] = [
+                'series_id' => $serie->id,
+                'numero' => $i,
+            ];
+        }
+        Season::insert($seasons);
+
+        $episodes = [];
+        foreach ($serie->seasons as $season) {
+            for ($j = 1; $j <= $request->episodesPerSeason; $j++) {
+                $episodes[] = [
+                    'season_id' => $season->id,
+                    'numero' => $j
+                ];
+            }
+        }
+        Episode::insert($episodes);
         return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!");
     }
 
@@ -62,10 +77,7 @@ class SeriesController extends Controller
 
     public function update(Series $id, SeriesFormRequest $request)
     {
-        dd($request->all());
-
         $id->update($request->all());
-
 
         return to_route('series.index')->with('success', "Série {$id->nome} atualizada com sucesso!");
     }

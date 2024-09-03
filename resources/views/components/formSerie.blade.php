@@ -32,16 +32,18 @@
             <label for="poster">Link do Poster:</label>
             <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" >
         </div>
-        <div class="d-flex justify-content-between">
-            <div class="input">
-                <label for="seasonsQty">Nº de Temporadas</label>
-                <input type="text" name="seasonsQty" id="seasonsQty">
+        @if($isEdit === false)
+            <div class="d-flex justify-content-between">
+                <div class="input">
+                    <label for="seasonsQty">Nº de Temporadas</label>
+                    <input type="text" name="seasonsQty" id="seasonsQty">
+                </div>
+                <div class="input">
+                    <label for="episodesPerSeason">Episódios por Temporada</label>
+                    <input type="text" name="episodesPerSeason" id="episodesPerSeason">
+                </div>
             </div>
-            <div class="input">
-                <label for="episodesPerSeason">Episódios por Temporada</label>
-                <input type="text" name="episodesPerSeason" id="episodesPerSeason">
-            </div>
-        </div>
+        @endif
         <div class="box-button">
             <a class="Btn success" href="{{ url('/') }}">
                 <div class="sign">
