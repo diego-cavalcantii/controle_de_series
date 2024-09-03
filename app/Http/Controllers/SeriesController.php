@@ -17,7 +17,7 @@ use App\Models\Genero;
 class SeriesController extends Controller
 {
 
-    public function  __construct(private EloquentSeriesRepository $repository)
+    public function  __construct(private SeriesRepository $repository)
     {
 
     }
@@ -49,19 +49,24 @@ class SeriesController extends Controller
 
     public function edit(Series $serie)
     {
+
         $seasons = $serie->seasons()->with('episodes')->get();
+        $qtdSeasons = $seasons->count();
+        $episodes = $seasons->first()->episodes->count();
+
+
         $generos = Genero::all();
-        return view('series.edit', ['serie' => $serie, 'generos' => $generos, 'seasons' => $seasons]);
+        return view('series.edit', ['serie' => $serie, 'generos' => $generos, 'seasons' => $qtdSeasons], ['episodes' => $episodes]);
 
     }
 
-    public function update(Series $id, SeriesFormRequest $request)
+    public function update(Series $serie, SeriesFormRequest $request)
     {
+        // Chama o método update do repositório e passa a série e o request
+        $serie = $this->repository->update($serie, $request);
 
-        $id->update($request->all());
-
-
-        return to_route('series.index')->with('success', "Série {$id->nome} atualizada com sucesso!");
+        // Redireciona para a lista de séries com uma mensagem de sucesso
+        return to_route('series.index')->with('success', "Série {$serie->nome} atualizada com sucesso!");
     }
 
     public function destroy(Series $id)

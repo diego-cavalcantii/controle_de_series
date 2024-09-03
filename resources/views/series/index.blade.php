@@ -1,11 +1,7 @@
 <x-layout title="{{ isset($genero) ? 'Séries de ' . $genero->nome_genero : 'Séries' }}">
   <a class="brutalist-input" style="margin-bottom:20px;" href="{{ route('series.create') }}">Adicionar nova Série</a>
 
-    @isset($mensagemSucesso)
-    <div class="alert alert-success mt-4">
-        {{ $mensagemSucesso }}
-    </div>
-    @endisset
+
 
   <ul class="movie-list">
     @foreach($series as $serie)

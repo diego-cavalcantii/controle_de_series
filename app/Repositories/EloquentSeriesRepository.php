@@ -13,6 +13,7 @@ class EloquentSeriesRepository implements SeriesRepository
     public function add(SeriesFormRequest $request): Series
     {
         return DB::transaction(function () use ($request) {
+            $request->merge(['nome' => ucwords($request->nome)]);
             $serie = Series::create($request->all());
             $seasons = [];
             for ($i = 1; $i <= $request->seasonsQty; $i++) {

@@ -5,5 +5,6 @@
     :isEdit="true"
     :generos="$generos"
     :seasons="$seasons"
+    :episodes="$episodes"
   />
 </x-layout>

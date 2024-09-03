@@ -18,6 +18,12 @@
   <x-header title="{{$title}}" />
 
   <main class="container-series">
+      @isset($mensagemSucesso)
+          <div class="alert alert-success mt-4">
+              {{ $mensagemSucesso }}
+          </div>
+      @endisset
+
       @if($errors->any())
           <div class="alert alert-danger" style="display:flex; gap:20px; align-items:center; width:fit-content;">
               <img src="https://cdn-icons-png.flaticon.com/512/1980/1980005.png" alt="imagem de erro" style="width:50px; height:50px;">

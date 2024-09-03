@@ -35,11 +35,11 @@
         <div class="d-flex justify-content-between">
             <div class="input">
                 <label for="seasonsQty">Nº de Temporadas</label>
-                <input type="text" name="seasonsQty" id="seasonsQty" >
+                <input type="text" name="seasonsQty" id="seasonsQty">
             </div>
             <div class="input">
                 <label for="episodesPerSeason">Episódios por Temporada</label>
-                <input type="text" name="episodesPerSeason" id="episodesPerSeason" >
+                <input type="text" name="episodesPerSeason" id="episodesPerSeason">
             </div>
         </div>
         <div class="box-button">
