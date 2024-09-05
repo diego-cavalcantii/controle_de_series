@@ -43,6 +43,7 @@ class GenerosController extends Controller
 
     public function store(GenerosFormRequest $request)
     {
+        $request->merge(['nome_genero' => ucwords($request->nome_genero)]);
         $genero = ucwords($request->nome_genero);
         $generoExistente = Genero::where('nome_genero', $genero)->first();
         if ($generoExistente) {
@@ -52,29 +53,28 @@ class GenerosController extends Controller
         return redirect()->back()->with('success', "genero criada com sucesso!");
     }
 
-    public function edit(string $id)
+    public function edit(Genero $genero)
     {
-        $genero = Genero::findOrFail($id);
         return view('generos.edit', ['genero' => $genero]);
     }
 
-    public function update(GenerosFormRequest $request, string $id)
+    public function update(GenerosFormRequest $request, Genero $genero)
     {
-        $genero = Genero::findOrFail($id);
+
         $genero->nome_genero = ucwords($request->nome_genero);
         $generoExistente = Genero::where('nome_genero', $genero->nome_genero)->first();
         if ($generoExistente) {
             return redirect()->back()->withErrors(['genero' => 'Esse gênero já existe no banco de dados.'])->withInput();
         }
-        $genero->save();
+        $genero->update($request->all());
         return to_route('generos.index');
     }
 
 
 
-    public function destroy(Request $request)
+    public function destroy(Genero $genero)
     {
-        Genero::destroy($request->id);
+        $genero->delete();
         return redirect()->back();
     }
 }

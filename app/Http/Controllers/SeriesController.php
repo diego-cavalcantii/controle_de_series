@@ -62,31 +62,26 @@ class SeriesController extends Controller
         return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!");
     }
 
-    public function edit(Series $serie)
+    public function edit(Series $series)
     {
-
-        $seasons = $serie->seasons()->with('episodes')->get();
-        $qtdSeasons = $seasons->count();
-        $episodes = $seasons->first()->episodes->count();
-
 
         $generos = Genero::all();
-        return view('series.edit', ['serie' => $serie, 'generos' => $generos, 'seasons' => $qtdSeasons], ['episodes' => $episodes]);
+        return view('series.edit', ['serie' => $series, 'generos' => $generos]);
 
     }
 
-    public function update(Series $id, SeriesFormRequest $request)
+    public function update(Series $series, SeriesFormRequest $request)
     {
-        $id->update($request->all());
+        $series->update($request->all());
 
-        return to_route('series.index')->with('success', "Série {$id->nome} atualizada com sucesso!");
+        return to_route('series.index')->with('success', "Série {$series->nome} atualizada com sucesso!");
     }
 
-    public function destroy(Series $id)
+    public function destroy(Series $series)
     {
 
-        $id->delete();
+        $series->delete();
 
-        return to_route('series.index')->with('success', "Série {$id->nome} deletada com sucesso!");
+        return to_route('series.index')->with('success', "Série {$series->nome} deletada com sucesso!");
     }
 }

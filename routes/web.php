@@ -14,9 +14,9 @@ Route::get('/', function () {
    Route::get('/series', 'index')->name('series.index'); // Rota principal que chama o método index
    Route::get('/series/criar', 'create')->name('series.create'); // Rota para criar uma nova série
    Route::post('/series/salvar', 'store')->name('series.store'); // Rota para salvar uma nova série
-   Route::get('/series/{serie}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
-   Route::put('/series/{id}', 'update')->name('series.update'); // Rota para atualizar uma série existente
-   Route::delete('/series/{id}', 'destroy')->name('series.destroy'); // Rota para deletar uma série existente
+   Route::get('/series/{series}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
+   Route::put('/series/{series}', 'update')->name('series.update'); // Rota para atualizar uma série existente
+   Route::delete('/series/{series}', 'destroy')->name('series.destroy'); // Rota para deletar uma série existente
  });
 
 Route::controller(GenerosController::class)->group(function () {
@@ -24,9 +24,9 @@ Route::controller(GenerosController::class)->group(function () {
     Route::post('/generos/show', 'show')->name('generos.show');
   Route::get('/generos/criar', 'create')->name('generos.create'); // Rota para adicionar um novo gênero
   Route::post('/generos/salvar', 'store')->name('generos.store'); // Rota para salvar um novo gênero
-  Route::get('/generos/{id}/editar', 'edit')->name('generos.edit'); // Rota para editar um gênero
-  Route::put('/generos/{id}', 'update')->name('generos.update'); // Rota para atualizar um gênero
-  Route::delete('/generos/{id}', 'destroy')->name('generos.destroy'); // Rota para deletar um gênero
+  Route::get('/generos/{genero}/editar', 'edit')->name('generos.edit'); // Rota para editar um gênero
+  Route::put('/generos/{genero}', 'update')->name('generos.update'); // Rota para atualizar um gênero
+  Route::delete('/generos/{genero}', 'destroy')->name('generos.destroy'); // Rota para deletar um gênero
 });
 
 

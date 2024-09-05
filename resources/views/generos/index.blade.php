@@ -7,7 +7,7 @@
         @method('DELETE')
         <button class="btn btn-danger">Apagar</button>
         <a class="btn btn-warning" href="{{ route('generos.edit', $genero->id) }}">Editar</a>
-      </form>
+    </form>
     </li>
     @endforeach
   </ul>
