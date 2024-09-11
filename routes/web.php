@@ -17,11 +17,11 @@ Route::get('/', function () {
    Route::get('/series/{series}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
    Route::put('/series/{series}', 'update')->name('series.update'); // Rota para atualizar uma série existente
    Route::delete('/series/{series}', 'destroy')->name('series.destroy'); // Rota para deletar uma série existente
+     Route::post('/series/filter', 'filter')->name('series.filter');
  });
 
 Route::controller(GenerosController::class)->group(function () {
   Route::get('/generos', 'index')->name('generos.index'); // Rota para listar todos os gêneros
-    Route::post('/generos/show', 'show')->name('generos.show');
   Route::get('/generos/criar', 'create')->name('generos.create'); // Rota para adicionar um novo gênero
   Route::post('/generos/salvar', 'store')->name('generos.store'); // Rota para salvar um novo gênero
   Route::get('/generos/{genero}/editar', 'edit')->name('generos.edit'); // Rota para editar um gênero

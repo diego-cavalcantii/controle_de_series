@@ -198,7 +198,7 @@ nav {
   nav {
     flex-direction: row;
     gap: 50px;
-    width: 90%;
+    width: 85%;
 
     ul {
       flex-direction: row;

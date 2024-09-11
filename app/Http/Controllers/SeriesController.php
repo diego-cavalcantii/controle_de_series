@@ -29,6 +29,22 @@ class SeriesController extends Controller
 
     }
 
+    public function filter(Request $request)
+    {
+
+        $query = Series::query();
+        $mensagemSucesso = session('mensagemSucesso');
+
+        if($request->filled('genero')){
+            $query->where('genero_id', $request->genero);
+        }
+
+        $series = $query->get();
+        dd($series);
+
+        return view('series.index', ['series' => $series])->with('mensagemSucesso', $mensagemSucesso);
+    }
+
     public function create()
     {
         $generos = Genero::all();

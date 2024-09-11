@@ -1,7 +1,7 @@
 <header>
     <nav>
         <h1>{{ $title }}</h1>
-        <form id="filterForm" action="{{ route('generos.show') }}" method="POST">
+        <form id="filterForm" action="{{ route('series.filter') }}" method="POST">
             @csrf
             <select name="genero" id="genero" class="brutalist-input ">
                 <option value="" disabled selected>Selecione o Gênero</option>
