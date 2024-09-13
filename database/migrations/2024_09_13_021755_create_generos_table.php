@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('episodes', function (Blueprint $table) {
-            $table->boolean('watched')->default(false);
+        Schema::create('generos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome_genero');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('episodes', function (Blueprint $table) {
-            $table->dropColumn('watched');
-        });
+        Schema::dropIfExists('generos');
     }
 };

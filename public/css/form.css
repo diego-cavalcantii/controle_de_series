@@ -20,6 +20,8 @@
   align-items: center;
   gap: 30px;
   font-style: italic;
+    flex-grow: 1;
+    justify-content: flex-end;
 }
 
 .input {
@@ -46,7 +48,6 @@
 .brutalist-input {
   font-family: "Kanit", sans-serif;
   font-weight: 500;
-  width: 100%;
   padding: 6px 8px;
   height: auto;
   font-size: 18px;

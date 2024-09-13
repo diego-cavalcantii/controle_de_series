@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Series;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Genero;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,9 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('*', function ($view) {
-            $generos = Genero::all(); // Obtenha todos os gêneros do banco de dados
-            $view->with('generos', $generos); // Compartilhe a variável `$generos` com a view
+        View::composer('components.header', function ($view) {
+            $generos = Genero::all();
+            $avaliacoes = Series::select('avaliacao')->distinct()->pluck('avaliacao');
+            $view->with('generos', $generos)->with('avaliacoes', $avaliacoes);
         });
     }
 }

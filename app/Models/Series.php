@@ -11,15 +11,11 @@ use Illuminate\Database\Eloquent\Builder;
 class Series extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'poster', 'genero_id'];
+    protected $fillable = ['nome', 'poster', 'genero_id','avaliacao'];
 
 
     public function generos() {
         return $this->belongsTo(Genero::class,'genero_id');
-    }
-
-    public function seasons(){
-        return $this->hasMany(Season::class, 'series_id');
     }
 
     protected static function booted()

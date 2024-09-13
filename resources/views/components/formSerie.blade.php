@@ -32,18 +32,21 @@
             <label for="poster">Link do Poster:</label>
             <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" >
         </div>
-        @if($isEdit === false)
-            <div class="d-flex justify-content-between">
-                <div class="input">
-                    <label for="seasonsQty">Nº de Temporadas</label>
-                    <input type="text" name="seasonsQty" id="seasonsQty">
-                </div>
-                <div class="input">
-                    <label for="episodesPerSeason">Episódios por Temporada</label>
-                    <input type="text" name="episodesPerSeason" id="episodesPerSeason">
-                </div>
+
+        <div class="inputRadio">
+            <div>
+                <label for="ruim">Ruim</label>
+                <input type="radio" name="avaliacao" value="Ruim" {{ isset($serie) && $serie->avaliacao === "Ruim" ? 'checked' : ''  }}>
             </div>
-        @endif
+            <div>
+                <label for="bom">Bom</label>
+                <input type="radio" name="avaliacao" value="Bom" {{ isset($serie) && $serie->avaliacao === "Bom"  ? 'checked' : ''  }}>
+            </div>
+            <div>
+                <label for="Otimo">Otimo</label>
+                <input type="radio" name="avaliacao" value="Otimo" {{ isset($serie) && $serie->avaliacao === "Otimo" ? 'checked' : ''  }}>
+            </div>
+        </div>
         <div class="box-button">
             <a class="Btn success" href="{{ url('/') }}">
                 <div class="sign">

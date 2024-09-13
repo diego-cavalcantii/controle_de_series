@@ -17,7 +17,7 @@ Route::get('/', function () {
    Route::get('/series/{series}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
    Route::put('/series/{series}', 'update')->name('series.update'); // Rota para atualizar uma série existente
    Route::delete('/series/{series}', 'destroy')->name('series.destroy'); // Rota para deletar uma série existente
-     Route::post('/series/filter', 'filter')->name('series.filter');
+     Route::get('/series/filter', 'filter')->name('series.filter');
  });
 
 Route::controller(GenerosController::class)->group(function () {
@@ -29,9 +29,4 @@ Route::controller(GenerosController::class)->group(function () {
   Route::delete('/generos/{genero}', 'destroy')->name('generos.destroy'); // Rota para deletar um gênero
 });
 
-
-Route::get('/series/{series}/seasons',[\App\Http\Controllers\SeasonsController::class, 'index'])->name('seasons.index');
-
-Route::get('/seasons/{season}/episodes', [\App\Http\Controllers\EpisodesController::class, 'index'])->name('episodes.index');
-Route::post('/seasons/{season}/episodes', [\App\Http\Controllers\EpisodesController::class, 'update'])->name('episodes.index');
 

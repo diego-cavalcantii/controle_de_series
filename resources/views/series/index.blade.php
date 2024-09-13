@@ -11,8 +11,8 @@
       </div>
       <div class="box-info">
         <div>
-            <a href="{{ route('seasons.index',$serie->id) }}"><h2>{{ ucwords($serie->nome) }}</h2></a>
-          <p>{{ ucwords($serie->generos->nome_genero) }}</p>
+            <h2>{{ ucwords($serie->nome) }}</h2>
+            <p>{{ ucwords($serie->generos->nome_genero) }}</p>
         </div>
         <div style="display:flex; gap:5px; flex-direction:column; align-items:center;">
 

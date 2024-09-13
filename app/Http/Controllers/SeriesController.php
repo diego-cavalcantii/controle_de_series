@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
-use App\Models\Episode;
-use App\Models\Season;
-use App\Repositories\EloquentSeriesRepository;
-use App\Repositories\SeriesRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Series;
@@ -20,7 +16,7 @@ class SeriesController extends Controller
     public function index()
     {
 
-        $series = Series::with(['generos','seasons'])->get();
+        $series = Series::with(['generos'])->get();
         $mensagemSucesso = session('success');
 
 
@@ -38,9 +34,11 @@ class SeriesController extends Controller
         if($request->filled('genero')){
             $query->where('genero_id', $request->genero);
         }
+        if($request->filled('avaliacao')){
+            $query->where('avaliacao', $request->avaliacao);
+        }
 
         $series = $query->get();
-        dd($series);
 
         return view('series.index', ['series' => $series])->with('mensagemSucesso', $mensagemSucesso);
     }
@@ -55,26 +53,15 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request)
     {
         $request->merge(['nome' => ucwords($request->nome)]);
-        $serie = Series::create($request->all());
-        $seasons = [];
-        for ($i = 1; $i <= $request->seasonsQty; $i++) {
-            $seasons[] = [
-                'series_id' => $serie->id,
-                'numero' => $i,
-            ];
-        }
-        Season::insert($seasons);
 
-        $episodes = [];
-        foreach ($serie->seasons as $season) {
-            for ($j = 1; $j <= $request->episodesPerSeason; $j++) {
-                $episodes[] = [
-                    'season_id' => $season->id,
-                    'numero' => $j
-                ];
-            }
+        $serieJaExistente = Series::where('nome', $request->nome)->where('genero_id', $request->genero_id)->where('poster', $request->poster)->where('avaliacao', $request->avaliacao)->exists();
+
+        if($serieJaExistente){
+            return back()->withErrors('Série já cadastrada!');
         }
-        Episode::insert($episodes);
+
+        $serie = Series::create($request->all());
+
         return to_route('series.index')->with('success', "Série {$serie->nome} criada com sucesso!");
     }
 
