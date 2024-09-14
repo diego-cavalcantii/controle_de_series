@@ -9,6 +9,7 @@ use App\Models\Series;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\Genero;
+use function PHPUnit\Framework\isEmpty;
 
 class SeriesController extends Controller
 {
@@ -17,6 +18,7 @@ class SeriesController extends Controller
     {
 
         $series = Series::with(['generos'])->get();
+//        dd($series);
         $mensagemSucesso = session('success');
 
 
@@ -37,6 +39,9 @@ class SeriesController extends Controller
         if($request->filled('avaliacao')){
             $query->where('avaliacao', $request->avaliacao);
         }
+        if($request->filled('assistido')){
+            $query->where('assistido', $request->assistido);
+        }
 
         $series = $query->get();
 
@@ -52,6 +57,14 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
+
+
+        if (!$request->has('assistido')) {
+            $request->merge(['assistido' => 'Não Assistido']);
+        }
+        if(!$request->has('avaliacao')){
+            $request->merge(['avaliacao' => 'Sem Avaliação']);
+        }
         $request->merge(['nome' => ucwords($request->nome)]);
 
         $serieJaExistente = Series::where('nome', $request->nome)->where('genero_id', $request->genero_id)->where('poster', $request->poster)->where('avaliacao', $request->avaliacao)->exists();
@@ -75,6 +88,10 @@ class SeriesController extends Controller
 
     public function update(Series $series, SeriesFormRequest $request)
     {
+        if (!$request->has('assistido')) {
+            $request->merge(['assistido' => 'Não Assistido']);
+        }
+
         $series->update($request->all());
 
         return to_route('series.index')->with('success', "Série {$series->nome} atualizada com sucesso!");

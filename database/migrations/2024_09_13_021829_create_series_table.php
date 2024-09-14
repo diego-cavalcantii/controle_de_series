@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('poster');
             $table->string('avaliacao');
+            $table->string('assistido');
             $table->foreignId('genero_id')->constrained('generos')->onDelete('cascade');
             $table->timestamps();
         });

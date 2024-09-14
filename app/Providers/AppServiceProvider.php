@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
         View::composer('components.header', function ($view) {
             $generos = Genero::all();
             $avaliacoes = Series::select('avaliacao')->distinct()->pluck('avaliacao');
-            $view->with('generos', $generos)->with('avaliacoes', $avaliacoes);
+            $assistidos = Series::select('assistido')->distinct()->pluck('assistido');
+            $view->with('generos', $generos)->with('avaliacoes', $avaliacoes)->with('assistidos', $assistidos);
         });
     }
 }

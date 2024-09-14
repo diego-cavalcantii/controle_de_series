@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Series extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'poster', 'genero_id','avaliacao'];
+    protected $fillable = ['nome', 'poster', 'genero_id','avaliacao','assistido'];
 
 
     public function generos() {

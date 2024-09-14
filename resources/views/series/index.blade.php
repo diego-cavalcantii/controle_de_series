@@ -7,12 +7,31 @@
     @foreach($series as $serie)
     <li class="movie-box">
       <div class="box-img">
+          @if($serie->assistido == "Assistido")
+              <span class="check">&#10003;</span>
+          @endif
         <img class="poster" src="{{ $serie->poster}}" alt="poster da série">
       </div>
       <div class="box-info">
-        <div>
+        <div class="box-bio">
             <h2>{{ ucwords($serie->nome) }}</h2>
             <p>{{ ucwords($serie->generos->nome_genero) }}</p>
+            <div class="rating">
+                <input value="5 estrelas" name="avaliacao_{{ $serie->id }}" id="star5_{{ $serie->id }}" type="radio" {{ $serie->avaliacao == "5 estrelas" ? 'checked' : '' }} disabled>
+                <label title="5 estrelas" for="star5_{{ $serie->id }}"></label>
+
+                <input value="4 estrelas" name="avaliacao_{{ $serie->id }}" id="star4_{{ $serie->id }}" type="radio" {{ $serie->avaliacao == "4 estrelas" ? 'checked' : '' }} disabled>
+                <label title="4 estrelas" for="star4_{{ $serie->id }}"></label>
+
+                <input value="3 estrelas" name="avaliacao_{{ $serie->id }}" id="star3_{{ $serie->id }}" type="radio" {{ $serie->avaliacao == "3 estrelas" ? 'checked' : '' }} disabled>
+                <label title="3 estrelas" for="star3_{{ $serie->id }}"></label>
+
+                <input value="2 estrelas" name="avaliacao_{{ $serie->id }}" id="star2_{{ $serie->id }}" type="radio" {{ $serie->avaliacao == "2 estrelas" ? 'checked' : '' }} disabled>
+                <label title="2 estrelas" for="star2_{{ $serie->id }}"></label>
+
+                <input value="1 estrela" name="avaliacao_{{ $serie->id }}" id="star1_{{ $serie->id }}" type="radio" {{ $serie->avaliacao == "1 estrela" ? 'checked' : '' }} disabled>
+                <label title="1 estrela" for="star1_{{ $serie->id }}"></label>
+            </div>
         </div>
         <div style="display:flex; gap:5px; flex-direction:column; align-items:center;">
 
