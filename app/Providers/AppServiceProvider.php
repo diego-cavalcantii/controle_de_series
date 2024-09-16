@@ -27,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
             $generos = Genero::all();
             $avaliacoes = Series::select('avaliacao')->distinct()->pluck('avaliacao');
             $assistidos = Series::select('assistido')->distinct()->pluck('assistido');
-            $view->with('generos', $generos)->with('avaliacoes', $avaliacoes)->with('assistidos', $assistidos);
-        });
+            $view->with('generos', $generos)->with('avaliacoes', $avaliacoes)->with('assistidos', $assistidos);        });
     }
 }

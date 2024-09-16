@@ -20,7 +20,6 @@
   align-items: center;
   gap: 30px;
   font-style: italic;
-    flex-grow: 1;
     justify-content: flex-end;
 }
 
@@ -36,7 +35,6 @@
     box-shadow: 4px 4px #303030;
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--font-color);
     padding: 5px 10px;
     outline: none;
 
@@ -62,12 +60,6 @@
   box-shadow: 2px 2px 0 #000;
 }
 
-.edit-genero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
 
 
 /* From Uiverse.io by andrew-demchenk0 */
@@ -113,6 +105,62 @@
     color: #ffa723;
 }
 
+
+.disabled {
+    display: none;
+}
+
+.watched {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label {
+        font-size: 1.4rem;
+    }
+}
+
+
+/*style="display: flex; justify-content: space-evenly; align-items: center"*/
+
+@media(min-width:375px) {
+    .edit-genero {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        margin-top: 20px;
+    }
+    .watch {
+        display: flex;
+        flex-direction: column;
+    }
+    .brutalist-input {
+        font-size: 10px;
+    }
+}
+
+@media(min-width:768px) {
+    .edit-genero {
+        flex-direction: row;
+        justify-content: space-between;
+
+    }
+    .watch {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+    .brutalist-input {
+        font-size: 10px;
+    }
+}
+
+@media(min-width:1200px) {
+    .brutalist-input {
+        font-size: 18px;
+    }
+
+}
 
 
 

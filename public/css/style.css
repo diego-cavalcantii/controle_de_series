@@ -219,9 +219,11 @@ nav {
   nav {
     flex-direction: column;
 
-    ul {
-      flex-direction: column;
-    }
+      form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+      }
   }
 
   .movie-list {
@@ -235,16 +237,30 @@ nav {
     gap: 50px;
     width: 85%;
 
-    ul {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+      h1 {
+
+      }
+
+      form {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            gap: 10px;
+          max-width: 50%;
+      }
   }
 
   .movie-list {
     justify-content: start;
   }
+}
+
+@media(min-width:1200px) {
+    nav {
+        form {
+            max-width: max-content;
+        }
+    }
 }
 
 /* media queries */

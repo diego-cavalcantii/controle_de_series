@@ -14,7 +14,9 @@
       </div>
       <div class="box-info">
         <div class="box-bio">
-            <h2>{{ ucwords($serie->nome) }}</h2>
+            <a href="{{ route('series.show',$serie) }}">
+                <h2>{{ ucwords($serie->nome) }}</h2>
+            </a>
             <p>{{ ucwords($serie->generos->nome_genero) }}</p>
             <div class="rating">
                 <input value="5 estrelas" name="avaliacao_{{ $serie->id }}" id="star5_{{ $serie->id }}" type="radio" {{ $serie->avaliacao == "5 estrelas" ? 'checked' : '' }} disabled>

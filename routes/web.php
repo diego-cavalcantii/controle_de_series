@@ -16,8 +16,9 @@ Route::get('/', function () {
    Route::post('/series/salvar', 'store')->name('series.store'); // Rota para salvar uma nova série
    Route::get('/series/{series}/editar', 'edit')->name('series.edit'); // Rota para editar uma série existente
    Route::put('/series/{series}', 'update')->name('series.update'); // Rota para atualizar uma série existente
-   Route::delete('/series/{series}', 'destroy')->name('series.destroy'); // Rota para deletar uma série existente
-     Route::get('/series/filter', 'filter')->name('series.filter');
+   Route::delete('/series/{series}', 'destroy')->name('series.destroy');
+   Route::get('/series/filter', 'filter')->name('series.filter');
+   Route::get('/series/{series}', 'show')->name('series.show');
  });
 
 Route::controller(GenerosController::class)->group(function () {

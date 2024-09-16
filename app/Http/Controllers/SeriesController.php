@@ -17,7 +17,9 @@ class SeriesController extends Controller
     public function index()
     {
 
+
         $series = Series::with(['generos'])->get();
+//        dd($series);
 //        dd($series);
         $mensagemSucesso = session('success');
 
@@ -25,6 +27,14 @@ class SeriesController extends Controller
         return view('series.index')->with('series', $series)
             ->with('mensagemSucesso', $mensagemSucesso); # Retornando a view listar-series
 
+    }
+
+    public function show(Series $series)
+    {
+//        dd($series);
+        $mensagemSucesso = session('success');
+        return view('series.show')->with('series', $series)
+            ->with('mensagemSucesso', $mensagemSucesso);
     }
 
     public function filter(Request $request)
@@ -90,6 +100,7 @@ class SeriesController extends Controller
     {
         if (!$request->has('assistido')) {
             $request->merge(['assistido' => 'Não Assistido']);
+            $request->merge(['avaliacao' => 'Sem Avaliação']);
         }
 
         $series->update($request->all());

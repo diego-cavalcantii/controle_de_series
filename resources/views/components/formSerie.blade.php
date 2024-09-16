@@ -32,23 +32,23 @@
             <label for="poster">Link do Poster:</label>
             <input style="color:blue; font-style:italic; text-decoration: underline" type="text" name="poster" id="poster" value="{{ $serie->poster ?? '' }}" >
         </div>
-        <div style="display: flex; justify-content: space-evenly; align-items: center" >
-        <div class="rating">
-            <input value="5 estrelas" name="avaliacao" id="star5" type="radio" {{ isset($serie) && $serie->avaliacao == "5 estrelas" ? 'checked' : '' }}>
-            <label title="text" for="star5"></label>
-            <input value="4 estrelas" name="avaliacao" id="star4" type="radio" {{ isset($serie) && $serie->avaliacao == "4 estrelas" ? 'checked' : '' }}>
-            <label title="text" for="star4"></label>
-            <input value="3 estrelas" name="avaliacao" id="star3" type="radio"  {{ isset($serie) && $serie->avaliacao == "3 estrelas" ? 'checked' : '' }}>
-            <label title="text" for="star3"></label>
-            <input value="2 estrelas" name="avaliacao" id="star2" type="radio" {{ isset($serie) && $serie->avaliacao == "2 estrelas" ? 'checked' : '' }}>
-            <label title="text" for="star2"></label>
-            <input value="1 estrela" name="avaliacao" id="star1" type="radio" {{ isset($serie) && $serie->avaliacao == "1 estrela" ? 'checked' : '' }}>
-            <label title="text" for="star1"></label>
-        </div>
-        <div>
-            <label style="display: inline" for="assistido">Assistido:</label>
-            <input type="checkbox" value="Assistido" name="assistido"  {{ isset($serie) && $serie->assistido == "Assistido" ? 'checked' : '' }}>
-        </div>
+        <div class="watch">
+            <div class="watched">
+                <label style="display: inline" for="assistido">Assistido:</label>
+                <input id="watched_check" type="checkbox" value="Assistido" name="assistido"  {{ isset($serie) && $serie->assistido == "Assistido" ? "checked" : '' }} class="ui-checkbox"/>
+            </div>
+            <div class="rating {{ isset($serie) ? '' : 'disabled' }}" id="rating">
+                <input value="5 estrelas" name="avaliacao" id="star5" type="radio" {{ isset($serie) && $serie->avaliacao == "5 estrelas" ? 'checked' : '' }}>
+                <label title="text" for="star5"></label>
+                <input value="4 estrelas" name="avaliacao" id="star4" type="radio" {{ isset($serie) && $serie->avaliacao == "4 estrelas" ? 'checked' : '' }}>
+                <label title="text" for="star4"></label>
+                <input value="3 estrelas" name="avaliacao" id="star3" type="radio"  {{ isset($serie) && $serie->avaliacao == "3 estrelas" ? 'checked' : '' }}>
+                <label title="text" for="star3"></label>
+                <input value="2 estrelas" name="avaliacao" id="star2" type="radio" {{ isset($serie) && $serie->avaliacao == "2 estrelas" ? 'checked' : '' }}>
+                <label title="text" for="star2"></label>
+                <input value="1 estrela" name="avaliacao" id="star1" type="radio" {{ isset($serie) && $serie->avaliacao == "1 estrela" ? 'checked' : '' }}>
+                <label title="text" for="star1"></label>
+            </div>
         </div>
 
         <div class="box-button">
@@ -71,3 +71,4 @@
         </div>
     </div>
 </form>
+<script src="{{ asset('js/script.js') }}" defer></script>
